@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 260 64" fill="none" role="img" aria-label="AQSOFT">
+  <defs>
+    <linearGradient id="aqTop" x1="8" y1="4" x2="56" y2="32" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#5EEAD4"/>
+      <stop offset="1" stop-color="#22D3EE"/>
+    </linearGradient>
+    <linearGradient id="aqLeft" x1="8" y1="18" x2="32" y2="60" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#3B82F6"/>
+      <stop offset="1" stop-color="#2563EB"/>
+    </linearGradient>
+    <linearGradient id="aqRight" x1="32" y1="18" x2="56" y2="60" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#8B5CF6"/>
+      <stop offset="1" stop-color="#6D28D9"/>
+    </linearGradient>
+  </defs>
+  <path d="M32 4 56.2 18 32 32 7.8 18Z" fill="url(#aqTop)"/>
+  <path d="M7.8 18 32 32v28L7.8 46Z" fill="url(#aqLeft)"/>
+  <path d="M32 32 56.2 18v28L32 60Z" fill="url(#aqRight)"/>
+  <path d="M19.5 47 32 22.5 44.5 47" stroke="#fff" stroke-width="4.2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M25.2 38.5h13.6" stroke="#fff" stroke-width="4.2" stroke-linecap="round"/>
+  <path d="M46.5 49.5 55 57" stroke="#fff" stroke-width="4.2" stroke-linecap="round"/>
+  <text x="72" y="43" font-family="'Space Grotesk', 'Segoe UI', Arial, sans-serif" font-size="30" letter-spacing="1.5" fill="#F8FAFC"><tspan font-weight="700">AQ</tspan><tspan font-weight="400" fill="#94A3B8">SOFT</tspan></text>
+</svg>

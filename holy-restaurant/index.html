@@ -555,30 +555,34 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
    in lowercase with dashes, e.g. "Crispy Empanadas" -> img/crispy-empanadas.jpg
    (square-ish JPG, ~800px). Or set img: "path/or/url.jpg" on a dish.
    A dish without a photo shows its initial on a warm tile instead.
+   Current photos are free stock images from Unsplash (unsplash.com/license),
+   not the restaurant's own food: swap in real photos when available.
    Hours: 24h clock, New York time. Only "closes 10 PM" is confirmed;
    set the real opening times per day (0 = Sunday … 6 = Saturday).
    ===================================================================== */
 const MENU = [
   { cat: "Starters", color: "#c9793a", dishes: [
     { name: "House Soup of the Day", desc: "Slow-simmered daily, served with warm bread.", price: "7" },
-    { name: "Crispy Empanadas", desc: "Golden pastry, savoury filling, house dipping sauce.", price: "9" },
-    { name: "Garden Salad", desc: "Crisp greens, tomato, cucumber, citrus dressing.", price: "8" },
+    { name: "Crispy Samosas", desc: "Golden pastry, spiced potato filling, mint chutney.", price: "8" },
+    { name: "Garden Salad", desc: "Crisp greens, red onion, carrot, citrus dressing.", price: "9" },
   ]},
   { cat: "Mains", color: "#b5482a", dishes: [
-    { name: "Grilled Chicken Plate", desc: "Marinated overnight, with rice, beans and salad.", price: "18" },
-    { name: "Braised Beef", desc: "Fork-tender, cooked low and slow in its own juices.", price: "22" },
-    { name: "Fish of the Day", desc: "Pan-seared catch with seasonal vegetables.", price: "24" },
-    { name: "Family Platter", desc: "A little of everything, made for sharing. Serves 3–4.", price: "65" },
+    { name: "Grilled Chicken Plate", desc: "Marinated overnight, with buttered vegetables.", price: "18" },
+    { name: "Grilled Steak", desc: "Char-grilled, sliced and rested, served with sides.", price: "26" },
+    { name: "Pan-seared Salmon", desc: "Crisp skin, lemon and seasonal greens.", price: "24" },
+    { name: "Grilled Chicken Wrap", desc: "Warm flatbread, slaw and house sauce.", price: "14" },
+    { name: "Mixed Grill Platter", desc: "Kebabs, chicken and grilled vegetables. Serves 3–4.", price: "65" },
   ]},
   { cat: "Sides", color: "#d9a441", dishes: [
     { name: "Seasoned Rice", desc: "Fluffy and fragrant, the way grandma made it.", price: "5" },
-    { name: "Sweet Plantains", desc: "Caramelised and golden.", price: "6" },
-    { name: "Hand-cut Fries", desc: "Crisp outside, soft inside.", price: "5" },
+    { name: "Hand-cut Fries", desc: "Crisp outside, soft inside, lightly spiced.", price: "5" },
+    { name: "Market Salad Bowl", desc: "Avocado, chickpeas, sweet potato and fresh greens.", price: "10" },
   ]},
   { cat: "Desserts", color: "#e8c48c", dishes: [
-    { name: "Flan", desc: "Silky caramel custard.", price: "7" },
-    { name: "Tres Leches", desc: "Light sponge soaked in three milks.", price: "8" },
-    { name: "Fresh Juice", desc: "Ask about today's fruit.", price: "5" },
+    { name: "Tiramisu", desc: "Espresso-soaked layers, mascarpone, cocoa.", price: "8" },
+    { name: "Raspberry Cream Cake", desc: "Light sponge, fresh raspberries and cream.", price: "8" },
+    { name: "Chocolate Fudge Cake", desc: "Rich, dark and made for sharing.", price: "8" },
+    { name: "Fresh Orange Juice", desc: "Squeezed to order.", price: "5" },
   ]},
 ];
 const HOURS = { 0:[11,22], 1:[11,22], 2:[11,22], 3:[11,22], 4:[11,22], 5:[11,22], 6:[11,22] };

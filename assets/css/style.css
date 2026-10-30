@@ -272,10 +272,10 @@ main, .footer { position: relative; z-index: 1; }
 /* ---------- services 3D ring ---------- */
 .services { position: relative; padding: clamp(100px, 12vw, 160px) 0 clamp(80px, 9vw, 120px); overflow: hidden; }
 .services .head { margin-bottom: 30px; }
-.ring-stage { position: relative; height: 500px; perspective: 1500px; perspective-origin: 50% 40%; touch-action: pan-y; cursor: grab; user-select: none; -webkit-user-select: none; }
+.ring-stage { --cw: clamp(300px, 24vw, 470px); --ch: calc(var(--cw) * 1.22); position: relative; width: 100%; height: calc(var(--ch) + 120px); perspective: 1500px; perspective-origin: 50% 40%; touch-action: pan-y; cursor: grab; user-select: none; -webkit-user-select: none; }
 .ring-stage.is-dragging { cursor: grabbing; }
 .ring { position: absolute; left: 50%; top: 50%; width: 0; height: 0; transform-style: preserve-3d; }
-.rcard { position: absolute; width: 300px; height: 380px; left: -150px; top: -190px; backface-visibility: hidden; -webkit-backface-visibility: hidden; transition: opacity .3s linear; }
+.rcard { position: absolute; width: var(--cw); height: var(--ch); left: calc(var(--cw) / -2); top: calc(var(--ch) / -2); backface-visibility: hidden; -webkit-backface-visibility: hidden; transition: opacity .3s linear; }
 .rcard__inner { height: 100%; border-radius: 24px; padding: 30px 28px; display: flex; flex-direction: column; border: 1px solid var(--line-2);
   background: linear-gradient(180deg, rgba(20,20,26,.92), rgba(8,8,11,.92)); backdrop-filter: blur(10px); transition: border-color .5s, box-shadow .5s, transform .6s var(--ease); }
 .rcard.is-front .rcard__inner { border-color: rgba(34,211,238,.55); box-shadow: 0 0 0 1px rgba(139,92,246,.25), 0 30px 80px -20px rgba(34,211,238,.35), inset 0 0 60px rgba(34,211,238,.06); transform: translateZ(30px); }
@@ -418,9 +418,7 @@ main, .footer { position: relative; z-index: 1; }
 
 /* ---------- footer ---------- */
 .footer { padding: 40px 0 30px; overflow: hidden; }
-.footer__big { font: 700 clamp(4rem, 21vw, 19rem)/.8 var(--display); letter-spacing: -0.06em; text-align: center; margin: 0 0 60px;
-  background: linear-gradient(180deg, rgba(255,255,255,.12), rgba(255,255,255,0)); -webkit-background-clip: text; background-clip: text; color: transparent; user-select: none; }
-.footer__grid { display: grid; grid-template-columns: 1.6fr 1fr 1fr 1fr; gap: 40px; padding-top: 50px; border-top: 1px solid var(--line); }
+.footer__grid { display: grid; grid-template-columns: 1.6fr 1fr 1fr 1fr; gap: 40px; padding-top: 60px; border-top: 1px solid var(--line); }
 .footer__tag { margin-top: 16px; font-size: 14.5px; max-width: 280px; }
 .footer h5 { font: 500 12px/1 var(--font); letter-spacing: .16em; text-transform: uppercase; color: var(--dim); margin-bottom: 20px; }
 .footer__grid a:not(.brand) { display: block; font-size: 14.5px; color: var(--muted); margin-bottom: 11px; transition: color .25s; }
@@ -438,8 +436,7 @@ main, .footer { position: relative; z-index: 1; }
   .footer__grid { grid-template-columns: 1fr 1fr; }
 }
 @media (max-width: 900px) {
-  .ring-stage { height: 440px; }
-  .rcard { width: 250px; height: 340px; left: -125px; top: -170px; }
+  .ring-stage { --cw: 250px; --ch: 340px; }
   .rcard__inner { padding: 24px 22px; }
   .rcard h3 { font-size: 1.35rem; }
   .work__grid { grid-template-columns: 1fr; }
@@ -507,13 +504,11 @@ main, .footer { position: relative; z-index: 1; }
   body { font-size: 17px; }
   .bento { grid-auto-rows: minmax(300px, auto); gap: 20px; }
   .tile { padding: 38px; }
-  .ring-stage { height: 580px; }
-  .rcard { width: 350px; height: 440px; left: -175px; top: -220px; }
   .rcard h3 { font-size: 1.85rem; }
+  .rcard p { font-size: 15.5px; }
   .pos { max-width: 780px; }
   .stack { width: 360px; height: 360px; }
-  .footer__big { font-size: clamp(4rem, 19vw, 24rem); }
-}
+  }
 
 /* gradient words inside animated headings: paint the gradient on each word so it stays visible mid-animation */
 [data-split] em { background: none; -webkit-background-clip: border-box; background-clip: border-box; color: inherit; }

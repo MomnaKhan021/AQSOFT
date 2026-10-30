@@ -211,6 +211,14 @@
   /* ---------- services: 3D ring carousel ---------- */
   const ringStage = $("#ring-stage");
   const ring = $("#ring");
+  // on wider screens the ring repeats the services so a full row of cards spans the screen
+  if (ring && window.innerWidth >= 900) {
+    Array.from(ring.children).forEach((c) => {
+      const copy = c.cloneNode(true);
+      copy.setAttribute("aria-hidden", "true");
+      ring.appendChild(copy);
+    });
+  }
   const rcards = $$(".rcard", ring || document);
   const ringState = { rot: 0, target: 0, dragging: false, hover: false, visible: false, radius: 0 };
   const STEP = rcards.length ? 360 / rcards.length : 0;
@@ -219,13 +227,17 @@
   const layoutRing = () => {
     if (!rcards.length) return;
     const w = rcards[0].offsetWidth;
-    ringState.radius = Math.round(w / 2 / Math.tan(Math.PI / rcards.length) + (window.innerWidth < 700 ? 18 : 36));
+    const fit = w / 2 / Math.tan(Math.PI / rcards.length) + (window.innerWidth < 700 ? 18 : 36);
+    // on larger screens open the ring up so the cards spread across ~85% of the width
+    const wide = window.innerWidth >= 900 ? window.innerWidth * 0.5 : 0;
+    ringState.radius = Math.round(Math.max(fit, wide));
+    ringStage.style.perspective = Math.round(Math.max(1500, ringState.radius * 1.5)) + "px";
     rcards.forEach((c, i) => { c.style.transform = `rotateY(${i * STEP}deg) translateZ(${ringState.radius}px)`; });
   };
   const snapRing = () => { ringState.target = Math.round(ringState.target / STEP) * STEP; };
   const renderRing = () => {
     if (!rcards.length) return;
-    if (!ringState.dragging && !ringState.hover && ringState.visible && !reduceMotion) ringState.target -= 0.045;
+    if (!ringState.dragging && !ringState.hover && ringState.visible && !reduceMotion) ringState.target -= 0.03;
     ringState.rot = reduceMotion ? ringState.target : lerp(ringState.rot, ringState.target, 0.075);
     ring.style.transform = `translateZ(${-ringState.radius}px) rotateY(${ringState.rot}deg)`;
     let front = 0, best = 999;
@@ -233,10 +245,10 @@
       let a = ((i * STEP + ringState.rot) % 360 + 540) % 360 - 180;
       const abs = Math.abs(a);
       if (abs < best) { best = abs; front = i; }
-      c.style.opacity = (1 - Math.pow(abs / 180, 0.8) * 0.9).toFixed(3);
+      c.style.opacity = Math.max(0.05, 1 - Math.pow(abs / 125, 1.5)).toFixed(3);
     });
     rcards.forEach((c, i) => c.classList.toggle("is-front", i === front));
-    if (ringCurrent) ringCurrent.textContent = String(front + 1).padStart(2, "0");
+    if (ringCurrent) ringCurrent.textContent = String(Number(rcards[front].dataset.index) + 1).padStart(2, "0");
   };
   if (ringStage && rcards.length) {
     layoutRing();

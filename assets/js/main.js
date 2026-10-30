@@ -384,7 +384,7 @@
     const narrow = window.innerWidth < 900;
     // on small screens the shapes sit behind the text, so keep them subtler there
     const full = active.id === "hero" || active.classList.contains("cta");
-    worldTarget.intensity = Number(active.dataset.intensity || 1) * (narrow && !full ? 0.55 : 1);
+    worldTarget.intensity = Number(active.dataset.intensity || 1) * (narrow && !full ? 0.7 : 1);
     worldTarget.x = narrow ? 0 : Number(active.dataset.x || 0);
     worldTarget.scale = Number(active.dataset.scale || 1);
   };
@@ -406,7 +406,7 @@
 
     /* --- build the four shapes --- */
     const N = small ? 7000 : 16000;
-    const sphere = new Float32Array(N * 3), cube = new Float32Array(N * 3), ringP = new Float32Array(N * 3), wave = new Float32Array(N * 3), rnd = new Float32Array(N);
+    const sphere = new Float32Array(N * 3), cube = new Float32Array(N * 3), cubeCol = new Float32Array(N * 3), ringP = new Float32Array(N * 3), wave = new Float32Array(N * 3), rnd = new Float32Array(N);
     const golden = Math.PI * (3 - Math.sqrt(5));
     const gauss = () => (Math.random() + Math.random() + Math.random() - 1.5) / 1.5;
 
@@ -423,7 +423,10 @@
       const d = corners[i].reduce((s, v, k) => s + (v !== corners[j][k] ? 1 : 0), 0);
       if (d === 1) edges.push([corners[i], corners[j]]);
     }
-    const H = 1.95;
+    const H = 2.0;
+    // AQ logo colours per cube face: top teal/cyan, left blue, right violet, bright edges
+    const FACE = [[0.2, 0.5, 1.0], [0.25, 0.95, 0.85], [0.6, 0.3, 1.0]]; // x, y, z axes
+    const EDGE = [0.45, 0.95, 1.0];
     const cols = Math.ceil(Math.sqrt(N * 1.9)), rows = Math.ceil(N / cols);
 
     for (let i = 0; i < N; i++) {
@@ -441,13 +444,16 @@
 
       // cube: bright edges + faces
       let c;
-      if (Math.random() < 0.38) {
+      if (Math.random() < 0.3) {
         const [a, b] = edges[(Math.random() * edges.length) | 0], t = Math.random();
         c = [(a[0] + (b[0] - a[0]) * t) * H, (a[1] + (b[1] - a[1]) * t) * H, (a[2] + (b[2] - a[2]) * t) * H];
+        cubeCol.set(EDGE, i * 3);
       } else {
         const axis = (Math.random() * 3) | 0, sign = Math.random() < 0.5 ? -1 : 1;
         c = [(Math.random() * 2 - 1) * H, (Math.random() * 2 - 1) * H, (Math.random() * 2 - 1) * H];
         c[axis] = sign * H;
+        const f = FACE[axis], shade = 1.1 + Math.random() * 0.35;
+        cubeCol.set([f[0] * shade, f[1] * shade, f[2] * shade], i * 3);
       }
       cube.set(iso(c[0], c[1], c[2]), i * 3);
 
@@ -470,6 +476,7 @@
     geo.setAttribute("aRing", new THREE.BufferAttribute(ringP, 3));
     geo.setAttribute("aWave", new THREE.BufferAttribute(wave, 3));
     geo.setAttribute("aRand", new THREE.BufferAttribute(rnd, 1));
+    geo.setAttribute("aCubeCol", new THREE.BufferAttribute(cubeCol, 3));
 
     const noise = `
       vec3 mod289(vec3 x){return x-floor(x*(1.0/289.0))*289.0;}
@@ -507,8 +514,8 @@
       uniforms, transparent: true, depthWrite: false, blending: THREE.AdditiveBlending,
       vertexShader: noise + `
         uniform float uTime; uniform vec4 uW; uniform vec2 uMouse; uniform float uSize; uniform float uPixelRatio;
-        attribute vec3 aCube; attribute vec3 aRing; attribute vec3 aWave; attribute float aRand;
-        varying float vMix; varying float vGlow;
+        attribute vec3 aCube; attribute vec3 aRing; attribute vec3 aWave; attribute float aRand; attribute vec3 aCubeCol;
+        varying float vMix; varying float vGlow; varying vec3 vCubeCol; varying float vCube;
         void main(){
           float t = uTime;
           // sphere: breathing noise surface
@@ -534,20 +541,27 @@
 
           vec4 mv = modelViewMatrix * vec4(p, 1.0);
           gl_Position = projectionMatrix * mv;
-          gl_PointSize = uSize * uPixelRatio * (0.35 + aRand * 0.9) * (1.0 + uW.y * 0.25) / -mv.z;
-          vMix = clamp(n * 0.5 + 0.5 + p.y * 0.07 + p.x * 0.03, 0.0, 1.0);
-          vGlow = 0.4 + 0.6 * smoothstep(-0.5, 0.8, n) + uW.y * 0.25;
+          gl_PointSize = uSize * uPixelRatio * (0.35 + aRand * 0.9) * (1.0 + uW.y * 0.45) / -mv.z;
+          // brand gradient: teal -> blue -> violet, mapped per shape
+          float mSph = n * 0.85 + 0.5 + p.y * 0.08 + p.x * 0.04;
+          float mGal = r / 6.6;
+          float mWav = (aWave.x + 11.0) / 22.0;
+          vMix = clamp(mSph * uW.x + mGal * uW.z + mWav * uW.w + 0.5 * uW.y, 0.0, 1.0);
+          vGlow = 0.55 + 0.6 * smoothstep(-0.5, 0.8, n) * (1.0 - uW.y) + uW.y * 0.75;
+          vCubeCol = aCubeCol;
+          vCube = uW.y;
         }`,
       fragmentShader: `
         uniform float uOpacity;
-        varying float vMix; varying float vGlow;
+        varying float vMix; varying float vGlow; varying vec3 vCubeCol; varying float vCube;
         void main(){
           float d = length(gl_PointCoord - 0.5);
           if (d > 0.5) discard;
           float s = pow(1.0 - d * 2.0, 2.2);
           vec3 c1 = vec3(0.37, 0.92, 0.83), c2 = vec3(0.23, 0.51, 0.96), c3 = vec3(0.55, 0.36, 0.96);
           vec3 col = vMix < 0.5 ? mix(c1, c2, vMix * 2.0) : mix(c2, c3, (vMix - 0.5) * 2.0);
-          gl_FragColor = vec4(col, s * vGlow * uOpacity * 0.75);
+          col = mix(col, vCubeCol, vCube);
+          gl_FragColor = vec4(col, s * vGlow * uOpacity * 0.9);
         }`
     });
     const points = new THREE.Points(geo, material);
@@ -560,8 +574,9 @@
     gc.width = gc.height = 256;
     const g = gc.getContext("2d");
     const grd = g.createRadialGradient(128, 128, 0, 128, 128, 128);
-    grd.addColorStop(0, "rgba(90,160,255,0.5)");
-    grd.addColorStop(0.35, "rgba(80,90,240,0.16)");
+    grd.addColorStop(0, "rgba(34,211,238,0.42)");
+    grd.addColorStop(0.3, "rgba(59,130,246,0.18)");
+    grd.addColorStop(0.6, "rgba(139,92,246,0.08)");
     grd.addColorStop(1, "rgba(0,0,0,0)");
     g.fillStyle = grd; g.fillRect(0, 0, 256, 256);
     const glow = new THREE.Sprite(new THREE.SpriteMaterial({ map: new THREE.CanvasTexture(gc), blending: THREE.AdditiveBlending, transparent: true, depthWrite: false, opacity: 0 }));
@@ -582,7 +597,7 @@
     if (!small && THREE.EffectComposer && THREE.UnrealBloomPass) {
       composer = new THREE.EffectComposer(renderer);
       composer.addPass(new THREE.RenderPass(scene, camera));
-      bloom = new THREE.UnrealBloomPass(new THREE.Vector2(256, 256), 0.8, 0.6, 0.0);
+      bloom = new THREE.UnrealBloomPass(new THREE.Vector2(256, 256), 0.85, 0.6, 0.0);
       composer.addPass(bloom);
     }
 

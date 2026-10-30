@@ -122,7 +122,7 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 .menu-open .drawer{clip-path:circle(150% at calc(100% - 40px) 50px)}
 .drawer a{font-family:var(--serif);font-size:clamp(2.4rem,11vw,3.6rem);line-height:1.25;opacity:0;transform:translateY(30px);transition:opacity .6s,transform .6s var(--ease)}
 .menu-open .drawer a{opacity:1;transform:none}
-.menu-open .drawer a:nth-child(2){transition-delay:.06s}.menu-open .drawer a:nth-child(3){transition-delay:.12s}.menu-open .drawer a:nth-child(4){transition-delay:.18s}
+.menu-open .drawer a:nth-child(2){transition-delay:.06s}.menu-open .drawer a:nth-child(3){transition-delay:.12s}.menu-open .drawer a:nth-child(4){transition-delay:.18s}.menu-open .drawer a:nth-child(5){transition-delay:.24s}
 .drawer .drawer-meta{margin-top:40px;color:var(--ink-dim);font-size:.9rem}
 @media (max-width:900px){.nav-links,.nav-cta{display:none}.burger{display:block}.nav .wrap{height:80px}.brand{font-size:1.6rem}}
 
@@ -250,6 +250,7 @@ section{position:relative}
 .visit-grid{display:grid;grid-template-columns:1fr 1.25fr;gap:clamp(30px,5vw,70px);align-items:stretch}
 .info-block{padding:28px 0;border-bottom:1px solid var(--line)}
 .info-block:first-child{padding-top:0}
+#hours{scroll-margin-top:100px}
 .info-block .eyebrow{margin-bottom:10px;display:block}
 .info-block .val{font-family:var(--serif);font-size:clamp(1.6rem,3vw,2.2rem);line-height:1.2}
 .info-block .val a{transition:color .3s}
@@ -329,6 +330,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
     <nav class="nav-links" aria-label="Primary">
       <a href="#menu">Menu</a>
       <a href="#dine">Dine</a>
+      <a href="#hours">Hours</a>
       <a href="#visit">Visit</a>
     </nav>
     <a class="nav-cta" href="tel:+19085364912">
@@ -342,6 +344,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
 <div class="drawer" aria-hidden="true">
   <a href="#menu">Menu</a>
   <a href="#dine">Dine</a>
+  <a href="#hours">Hours</a>
   <a href="#visit">Visit</a>
   <div class="drawer-meta">400 Rahway Ave, Elizabeth, NJ<br><a href="tel:+19085364912" style="font-family:var(--sans);font-size:1rem;opacity:1;transform:none">(908) 536-4912</a></div>
 </div>
@@ -474,7 +477,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
             <div class="val"><a href="https://www.google.com/maps/dir/?api=1&destination=400+Rahway+Ave,+Elizabeth,+NJ+07202" target="_blank" rel="noopener">400 Rahway Ave<br>Elizabeth, NJ 07202</a></div>
             <div class="sub">Plus code MQ5F+5P Elizabeth, New Jersey</div>
           </div>
-          <div class="info-block">
+          <div class="info-block" id="hours">
             <span class="eyebrow">Hours</span>
             <div class="val" id="hoursLine">8 AM – 10 PM</div>
             <div class="status" id="status"><i></i><span>Checking…</span></div>

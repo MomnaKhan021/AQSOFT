@@ -445,7 +445,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
         </div>
         <div>
           <ul class="dish-list" id="dishList" role="tabpanel"></ul>
-          <p class="menu-note">Prices and dishes may vary. Call <a href="tel:+19085364912" style="color:var(--gold)">(908) 536-4912</a> for today's specials.</p>
+          <p class="menu-note">Small and large plates available. Call <a href="tel:+19085364912" style="color:var(--gold)">(908) 536-4912</a> for prices and the menu of the day.</p>
         </div>
       </div>
     </div>
@@ -577,34 +577,26 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
    (square-ish JPG, ~800px). Or set img: "path/or/url.jpg" on a dish.
    A dish without a photo shows its initial on a warm tile instead.
    Accents are dropped from file names: "Pate Kòde" -> img/pate-kode.jpg.
-   Sample menu and prices: confirm them with the restaurant.
+   Dishes are from the restaurant's printed menu. Add price: "17" to a dish to show a price.
    Hours: 24h clock, New York time. Only "closes 10 PM" is confirmed;
    set the real opening times per day (0 = Sunday … 6 = Saturday).
    ===================================================================== */
+const RICE = "Served with rice and beans, white rice with bean sauce, or black rice.";
 const MENU = [
-  { cat: "Starters", color: "#ef4f86", dishes: [
-    { name: "Soup Joumou", desc: "Haiti's freedom soup: squash, beef, pasta and vegetables.", price: "9" },
-    { name: "Akra", desc: "Crispy malanga fritters, golden outside and soft inside.", price: "8" },
-    { name: "Pate Kòde", desc: "Flaky fried pastry filled with herring, chicken or beef.", price: "5" },
-    { name: "Bannann Peze ak Pikliz", desc: "Twice-fried green plantains with spicy pikliz slaw.", price: "8" },
+  { cat: "Soups & Stews", color: "#ef4f86", dishes: [
+    { name: "Bouillon / Stew", desc: "Goat, beef, plantain, spinach, carrots, malanga and yellow yam. Small or large." },
+    { name: "Squash Soup / Joumou", desc: "Haiti's beloved pumpkin soup, slow-cooked the traditional way." },
   ]},
-  { cat: "Mains", color: "#d21034", dishes: [
-    { name: "Griyo", desc: "Pork marinated in epis and sour orange, braised then fried crisp.", price: "18" },
-    { name: "Tasso Kabrit", desc: "Seasoned goat, slow-cooked then fried until crisp.", price: "22" },
-    { name: "Poul nan Sòs", desc: "Chicken stewed in a rich Creole tomato sauce.", price: "16" },
-    { name: "Pwason Gwo Sèl", desc: "Whole fish poached with lime, peppers and herbs.", price: "24" },
-    { name: "Lambi Kreyòl", desc: "Tender conch simmered in Creole sauce.", price: "26" },
+  { cat: "Plates", color: "#d21034", dishes: [
+    { name: "Hard Chicken Sauce / Poul Di", desc: RICE },
+    { name: "Turkey Sauce", desc: RICE },
+    { name: "Goat / Kabrit", desc: RICE },
+    { name: "Fried Fish / Salt Fish", desc: RICE },
+    { name: "Shrimp", desc: RICE },
   ]},
-  { cat: "Sides", color: "#19b8a6", dishes: [
-    { name: "Diri ak Djon Djon", desc: "Rice cooked in fragrant black mushroom broth.", price: "6" },
-    { name: "Diri Kole ak Pwa", desc: "Rice and red beans cooked together.", price: "5" },
-    { name: "Legim", desc: "Vegetable stew of eggplant, cabbage and chayote.", price: "7" },
-  ]},
-  { cat: "Desserts & Drinks", color: "#ffc93c", dishes: [
-    { name: "Pen Patat", desc: "Sweet potato pudding with coconut, ginger and cinnamon.", price: "6" },
-    { name: "Ji Grenadya", desc: "Fresh passion fruit juice.", price: "5" },
-    { name: "Ji Zoranj", desc: "Freshly squeezed orange juice.", price: "5", img: "img/fresh-orange-juice.jpg" },
-    { name: "Akasan", desc: "Warm, creamy corn drink with milk and cinnamon.", price: "5" },
+  { cat: "Vegetables", color: "#19b8a6", dishes: [
+    { name: "Chayote / Mirliton", desc: RICE },
+    { name: "Spinach / Lalo", desc: RICE },
   ]},
 ];
 const HOURS = { 0:[11,22], 1:[11,22], 2:[11,22], 3:[11,22], 4:[11,22], 5:[11,22], 6:[11,22] };
@@ -799,7 +791,7 @@ const HOURS = { 0:[11,22], 1:[11,22], 2:[11,22], 3:[11,22], 4:[11,22], 5:[11,22]
     list.innerHTML = c.dishes.map((d, j) =>
       `<li class="dish dish-anim" tabindex="0" style="animation-delay:${j * 70}ms">
         <div class="thumb" style="--c:${c.color}">${d.name[0]}<img src="${imgOf(d)}" alt="${d.name}" loading="lazy"></div>
-        <h3>${d.name}</h3><span class="price">$${d.price}</span><p>${d.desc}</p></li>`).join("");
+        <h3>${d.name}</h3><span class="price">${d.price ? "$" + d.price : ""}</span><p>${d.desc}</p></li>`).join("");
     const items = $$(".dish", list);
     items.forEach((el, j) => {
       const img = $(".thumb img", el);

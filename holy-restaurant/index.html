@@ -189,15 +189,6 @@ section{position:relative}
 .h2 em{color:var(--gold);font-weight:400}
 
 
-/* ============ Stats ============ */
-.stats{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
-.stat{padding:48px 28px;border-right:1px solid var(--line)}
-.stat:last-child{border-right:0}
-.stat .num{font-family:var(--serif);font-weight:600;font-size:clamp(2.8rem,6vw,4.6rem);line-height:1;color:var(--gold)}
-.stat:nth-child(2) .num{color:var(--pink)}.stat:nth-child(3) .num{color:var(--teal);white-space:nowrap;font-size:clamp(2.2rem,4.6vw,4.6rem)}.stat:nth-child(4) .num{color:var(--green)}
-.stat p{margin-top:12px;font-size:.74rem;letter-spacing:.2em;text-transform:uppercase;color:var(--ink-dim)}
-@media (max-width:800px){.stats{grid-template-columns:repeat(2,1fr)}.stat:nth-child(2){border-right:0}.stat:nth-child(-n+2){border-bottom:1px solid var(--line)}.stat{padding:34px 18px}}
-
 /* ============ Menu ============ */
 .menu-tabs{display:flex;gap:8px;flex-wrap:wrap}
 .tab{padding:11px 20px;border:1px solid var(--line);border-radius:999px;font-size:.74rem;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-dim);transition:all .35s}
@@ -416,16 +407,6 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
     <div class="marquee-track">
       <span>Byenvini</span><span>Dine-in</span><span>Bon apeti</span><span>Curbside pickup</span><span>Manje lakay</span><span>Delivery</span><span>Manje Ayisyen</span><span>Mèsi anpil</span><span>Open daily from 8 AM</span>
       <span>Byenvini</span><span>Dine-in</span><span>Bon apeti</span><span>Curbside pickup</span><span>Manje lakay</span><span>Delivery</span><span>Manje Ayisyen</span><span>Mèsi anpil</span><span>Open daily from 8 AM</span>
-    </div>
-  </div>
-
-  <!-- Stats -->
-  <div class="wrap">
-    <div class="stats">
-      <div class="stat reveal"><div class="num" data-count="4.8" data-dec="1">0</div><p>Google rating</p></div>
-      <div class="stat reveal d1"><div class="num" data-count="46">0</div><p>Guest reviews</p></div>
-      <div class="stat reveal d2"><div class="num">$20–30</div><p>Per person</p></div>
-      <div class="stat reveal d3"><div class="num" data-count="3">0</div><p>Ways to dine</p></div>
     </div>
   </div>
 

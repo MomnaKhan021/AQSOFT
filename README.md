@@ -12,8 +12,9 @@ AQSOFT/
 ├── index.html              # the whole one-page site
 ├── assets/
 │   ├── css/style.css       # all styles (colors live in :root at the top)
-│   ├── js/main.js          # animations, 3D hero, mobile menu, contact form
-│   ├── js/vendor/three.min.js   # Three.js r128 (bundled, no CDN needed)
+│   ├── js/main.js          # 3D world, animations, services ring, menu, contact form
+│   ├── js/content.js       # portfolio projects + team (edit this)
+│   ├── js/vendor/          # Three.js r128 + bloom, Lenis smooth scroll (bundled, no CDN)
 │   └── img/
 │       ├── logo.svg            # full logo (mark + wordmark)
 │       ├── logo-mark.svg       # icon only (also the favicon)
@@ -25,6 +26,16 @@ AQSOFT/
 ├── robots.txt / sitemap.xml
 └── .nojekyll
 ```
+
+## Adding portfolio projects and team photos
+
+Everything lives in `assets/js/content.js`, with examples inside it.
+
+1. Put project screenshots in `assets/img/projects/` and team photos in `assets/img/team/`
+   (JPG or WebP, around 1600px wide for projects and 800px for portraits).
+2. Add an entry per project / person in `content.js`.
+3. The **Portfolio** and **Team** sections (and the "Work" menu link) appear automatically
+   once they have at least one entry.
 
 ## Run it locally
 

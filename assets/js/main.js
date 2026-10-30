@@ -1,5 +1,5 @@
 /* =========================================================
-   AQSOFT — cinematic interactions & WebGL hero
+   AQSOFT — cinematic interactions & WebGL world
    ========================================================= */
 (function () {
   "use strict";
@@ -9,8 +9,82 @@
   const $ = (s, el = document) => el.querySelector(s);
   const $$ = (s, el = document) => Array.from(el.querySelectorAll(s));
   const clamp = (v, a, b) => Math.min(Math.max(v, a), b);
+  const lerp = (a, b, t) => a + (b - a) * t;
+  const esc = (v) => String(v == null ? "" : v).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
 
-  /* ---------- header: blur on scroll, hide on scroll down ---------- */
+  /* ---------- editable content: portfolio + team ---------- */
+  const content = window.AQ_CONTENT || {};
+  const projects = Array.isArray(content.projects) ? content.projects : [];
+  const team = Array.isArray(content.team) ? content.team : [];
+
+  if (projects.length) {
+    const grid = $("#work-grid");
+    grid.innerHTML = projects.map((p) => {
+      const tag = p.url ? "a" : "div";
+      const link = p.url ? ` href="${esc(p.url)}" target="_blank" rel="noopener"` : "";
+      const media = p.image
+        ? `<img src="${esc(p.image)}" alt="${esc(p.title)}" loading="lazy">`
+        : `<span class="pcard__ph">${esc((p.title || "?").charAt(0))}</span>`;
+      const tags = (p.tags || []).map((t) => `<span>${esc(t)}</span>`).join("");
+      return `<${tag} class="pcard reveal" data-cat="${esc(p.category)}"${link}>
+        <div class="pcard__media">${media}</div>
+        ${p.url ? '<span class="pcard__go" aria-hidden="true">↗</span>' : ""}
+        <div class="pcard__body">
+          ${p.category ? `<span class="pcard__cat">${esc(p.category)}</span>` : ""}
+          <h3>${esc(p.title)}</h3>
+          ${p.description ? `<p>${esc(p.description)}</p>` : ""}
+          ${tags ? `<div class="pcard__tags">${tags}</div>` : ""}
+        </div>
+      </${tag}>`;
+    }).join("");
+
+    const cats = [...new Set(projects.map((p) => p.category).filter(Boolean))];
+    const filters = $("#work-filters");
+    if (cats.length > 1) {
+      filters.innerHTML = ["All", ...cats].map((c, i) => `<button role="tab" aria-selected="${i === 0}" data-filter="${esc(c)}">${esc(c)}</button>`).join("");
+      filters.addEventListener("click", (e) => {
+        const btn = e.target.closest("button");
+        if (!btn) return;
+        $$("button", filters).forEach((b) => b.setAttribute("aria-selected", String(b === btn)));
+        const f = btn.dataset.filter;
+        $$(".pcard", grid).forEach((c) => c.classList.toggle("is-hidden", f !== "All" && c.dataset.cat !== f));
+      });
+    }
+    $("#work").hidden = false;
+  } else {
+    $$('[data-needs="projects"]').forEach((el) => el.remove());
+  }
+
+  if (team.length) {
+    $("#team-grid").innerHTML = team.map((m) => `<article class="member reveal">
+        <div class="member__photo">${m.photo ? `<img src="${esc(m.photo)}" alt="${esc(m.name)}" loading="lazy">` : ""}</div>
+        <div class="member__body">
+          <div><h3>${esc(m.name)}</h3><span>${esc(m.role)}</span></div>
+          ${m.linkedin ? `<a class="member__in" href="${esc(m.linkedin)}" target="_blank" rel="noopener" aria-label="${esc(m.name)} on LinkedIn">in</a>` : ""}
+        </div>
+      </article>`).join("");
+    $("#team").hidden = false;
+  }
+
+  /* ---------- smooth scrolling (Lenis) ---------- */
+  let lenis = null;
+  if (!reduceMotion && typeof window.Lenis === "function") {
+    lenis = new window.Lenis({ duration: 1.15, smoothWheel: true });
+    const raf = (time) => { lenis.raf(time); requestAnimationFrame(raf); };
+    requestAnimationFrame(raf);
+  }
+  document.addEventListener("click", (e) => {
+    const a = e.target.closest('a[href^="#"]');
+    if (!a) return;
+    const id = a.getAttribute("href");
+    const target = id === "#top" || id === "#" ? document.body : $(id);
+    if (!target) return;
+    e.preventDefault();
+    if (lenis) lenis.scrollTo(target === document.body ? 0 : target, { offset: -70 });
+    else window.scrollTo({ top: target === document.body ? 0 : target.getBoundingClientRect().top + window.scrollY - 70, behavior: reduceMotion ? "auto" : "smooth" });
+  });
+
+  /* ---------- header + menu ---------- */
   const header = $("#header");
   const burger = $("#burger");
   const nav = $("#nav");
@@ -18,8 +92,7 @@
   const onHeader = () => {
     const y = window.scrollY;
     header.classList.toggle("is-scrolled", y > 20);
-    const open = nav.classList.contains("is-open");
-    header.classList.toggle("is-hidden", !open && y > lastY && y > 400);
+    header.classList.toggle("is-hidden", !nav.classList.contains("is-open") && y > lastY && y > 400);
     lastY = y;
   };
   window.addEventListener("scroll", onHeader, { passive: true });
@@ -29,6 +102,7 @@
     nav.classList.toggle("is-open", open);
     burger.setAttribute("aria-expanded", String(open));
     burger.setAttribute("aria-label", open ? "Close menu" : "Open menu");
+    if (lenis) open ? lenis.stop() : lenis.start();
   };
   burger.addEventListener("click", () => setMenu(!nav.classList.contains("is-open")));
   $$("a", nav).forEach((a) => a.addEventListener("click", () => setMenu(false)));
@@ -82,7 +156,6 @@
   } else {
     revealTargets.forEach((el) => el.classList.add("is-visible"));
   }
-  // hero content shows right after the intro
   setTimeout(() => $$(".hero .reveal, .hero [data-split]").forEach((el) => el.classList.add("is-visible")), reduceMotion ? 0 : 1500);
   $$(".mini-chart i").forEach((b, i) => b.style.setProperty("--i", i));
 
@@ -135,36 +208,89 @@
   });
   if (layers.length) { setLayer(0); autoLayer(); }
 
-  /* ---------- scroll-driven effects (manifesto, horizontal track, timeline) ---------- */
+  /* ---------- services: 3D ring carousel ---------- */
+  const ringStage = $("#ring-stage");
+  const ring = $("#ring");
+  const rcards = $$(".rcard", ring || document);
+  const ringState = { rot: 0, target: 0, dragging: false, hover: false, visible: false, radius: 0 };
+  const STEP = rcards.length ? 360 / rcards.length : 0;
+  const ringCurrent = $("#ring-current");
+
+  const layoutRing = () => {
+    if (!rcards.length) return;
+    const w = rcards[0].offsetWidth;
+    ringState.radius = Math.round(w / 2 / Math.tan(Math.PI / rcards.length) + (window.innerWidth < 700 ? 18 : 36));
+    rcards.forEach((c, i) => { c.style.transform = `rotateY(${i * STEP}deg) translateZ(${ringState.radius}px)`; });
+  };
+  const snapRing = () => { ringState.target = Math.round(ringState.target / STEP) * STEP; };
+  const renderRing = () => {
+    if (!rcards.length) return;
+    if (!ringState.dragging && !ringState.hover && ringState.visible && !reduceMotion) ringState.target -= 0.045;
+    ringState.rot = reduceMotion ? ringState.target : lerp(ringState.rot, ringState.target, 0.075);
+    ring.style.transform = `translateZ(${-ringState.radius}px) rotateY(${ringState.rot}deg)`;
+    let front = 0, best = 999;
+    rcards.forEach((c, i) => {
+      let a = ((i * STEP + ringState.rot) % 360 + 540) % 360 - 180;
+      const abs = Math.abs(a);
+      if (abs < best) { best = abs; front = i; }
+      c.style.opacity = (1 - Math.pow(abs / 180, 0.8) * 0.9).toFixed(3);
+    });
+    rcards.forEach((c, i) => c.classList.toggle("is-front", i === front));
+    if (ringCurrent) ringCurrent.textContent = String(front + 1).padStart(2, "0");
+  };
+  if (ringStage && rcards.length) {
+    layoutRing();
+    window.addEventListener("resize", layoutRing);
+    let startX = 0, startTarget = 0, moved = false;
+    ringStage.addEventListener("pointerdown", (e) => {
+      ringState.dragging = true; moved = false;
+      startX = e.clientX; startTarget = ringState.target;
+      ringStage.classList.add("is-dragging");
+    });
+    window.addEventListener("pointermove", (e) => {
+      if (!ringState.dragging) return;
+      const dx = e.clientX - startX;
+      if (Math.abs(dx) > 4) moved = true;
+      ringState.target = startTarget + dx * (window.innerWidth < 700 ? 0.35 : 0.22);
+    });
+    const end = () => {
+      if (!ringState.dragging) return;
+      ringState.dragging = false;
+      ringStage.classList.remove("is-dragging");
+      snapRing();
+    };
+    window.addEventListener("pointerup", end);
+    window.addEventListener("pointercancel", end);
+    ringStage.addEventListener("mouseenter", () => { ringState.hover = true; });
+    ringStage.addEventListener("mouseleave", () => { ringState.hover = false; });
+    rcards.forEach((c, i) => c.addEventListener("click", () => {
+      if (moved) return;
+      // rotate the clicked card to the front along the shortest path
+      const a = ((i * STEP + ringState.target) % 360 + 540) % 360 - 180;
+      ringState.target -= a;
+      snapRing();
+    }));
+    $("#ring-prev").addEventListener("click", () => { snapRing(); ringState.target += STEP; });
+    $("#ring-next").addEventListener("click", () => { snapRing(); ringState.target -= STEP; });
+    if ("IntersectionObserver" in window) new IntersectionObserver(([e]) => { ringState.visible = e.isIntersecting; }).observe(ringStage);
+  }
+
+  /* ---------- scroll-driven effects ---------- */
   const manifesto = $("#manifesto-text");
   let mWords = [];
   if (manifesto) {
     manifesto.innerHTML = manifesto.textContent.trim().split(/\s+/).map((w) => `<span class="mw">${w}</span>`).join(" ");
     mWords = $$(".mw", manifesto);
   }
-  const hSection = $("#solutions");
-  const hTrack = $("#hscroll-track");
-  const hBar = $("#hscroll-bar");
   const timeline = $("#timeline");
   const tFill = $("#timeline-fill");
   const tSteps = $$(".tstep");
-  const desktop = window.matchMedia("(min-width: 901px)");
+  const progressBar = $("#progress");
 
-  const sizeHorizontal = () => {
-    if (!hSection || !hTrack) return;
-    if (desktop.matches && !reduceMotion) {
-      const dist = hTrack.scrollWidth - window.innerWidth;
-      hSection.style.height = window.innerHeight + Math.max(dist, 0) + "px";
-    } else {
-      hSection.style.height = "";
-      hTrack.style.transform = "";
-    }
-  };
-
-  let ticking = false;
   const onScrollFx = () => {
-    ticking = false;
     const vh = window.innerHeight;
+    const max = document.documentElement.scrollHeight - vh;
+    if (progressBar) progressBar.style.transform = `scaleX(${max > 0 ? window.scrollY / max : 0})`;
 
     if (mWords.length) {
       const r = manifesto.getBoundingClientRect();
@@ -172,16 +298,6 @@
       const lit = Math.round(p * mWords.length);
       mWords.forEach((w, i) => w.classList.toggle("on", i < lit));
     }
-
-    if (hSection && hTrack && desktop.matches && !reduceMotion) {
-      const r = hSection.getBoundingClientRect();
-      const total = hSection.offsetHeight - vh;
-      const p = clamp(-r.top / total, 0, 1);
-      const dist = hTrack.scrollWidth - window.innerWidth;
-      hTrack.style.transform = `translate3d(${-p * dist}px,0,0)`;
-      if (hBar) hBar.style.transform = `scaleX(${p})`;
-    }
-
     if (timeline && tFill) {
       const r = timeline.getBoundingClientRect();
       const p = clamp((vh * 0.75 - r.top) / (r.height * 0.9), 0, 1);
@@ -189,15 +305,21 @@
       tSteps.forEach((s, i) => s.classList.toggle("is-lit", p >= i / tSteps.length + 0.02));
     }
   };
-  const requestFx = () => { if (!ticking) { ticking = true; requestAnimationFrame(onScrollFx); } };
-  window.addEventListener("scroll", requestFx, { passive: true });
-  window.addEventListener("resize", () => { sizeHorizontal(); requestFx(); });
-  window.addEventListener("load", () => { sizeHorizontal(); requestFx(); });
-  sizeHorizontal();
-  onScrollFx();
 
-  /* ---------- spotlight + magnetic buttons ---------- */
+  /* ---------- cursor, spotlight, magnetic ---------- */
+  const cursor = $("#cursor");
+  const cur = { x: -100, y: -100, tx: -100, ty: -100 };
   if (finePointer && !reduceMotion) {
+    window.addEventListener("pointermove", (e) => {
+      cur.tx = e.clientX; cur.ty = e.clientY;
+      cursor.classList.add("is-on");
+    }, { passive: true });
+    document.addEventListener("mouseleave", () => cursor.classList.remove("is-on"));
+    document.addEventListener("pointerover", (e) => {
+      const t = e.target;
+      cursor.classList.toggle("is-drag", !!t.closest(".ring-stage"));
+      cursor.classList.toggle("is-hover", !t.closest(".ring-stage") && !!t.closest("a, button, summary, select, .layers-list li"));
+    });
     $$(".spot").forEach((el) => {
       el.addEventListener("pointermove", (e) => {
         const r = el.getBoundingClientRect();
@@ -208,11 +330,12 @@
     $$(".magnetic").forEach((el) => {
       el.addEventListener("pointermove", (e) => {
         const r = el.getBoundingClientRect();
-        const x = e.clientX - r.left - r.width / 2, y = e.clientY - r.top - r.height / 2;
-        el.style.transform = `translate(${x * 0.18}px, ${y * 0.3}px)`;
+        el.style.transform = `translate(${(e.clientX - r.left - r.width / 2) * 0.18}px, ${(e.clientY - r.top - r.height / 2) * 0.3}px)`;
       });
       el.addEventListener("pointerleave", () => { el.style.transform = ""; });
     });
+  } else if (cursor) {
+    cursor.remove();
   }
 
   /* ---------- contact form ---------- */
@@ -237,43 +360,116 @@
     note.textContent = "Thanks! Your email app should open with the message ready to send.";
   });
 
-  /* ---------- WebGL hero: particle "AI core" ---------- */
-  function initHero() {
-    const canvas = $("#hero-canvas");
-    if (!canvas || typeof THREE === "undefined") return;
+  /* =========================================================
+     WebGL world: one particle system behind the whole site.
+     Each section declares data-scene (sphere | cube | ring | wave)
+     and the particles morph between shapes as you scroll.
+     ========================================================= */
+  const SHAPES = { sphere: 0, cube: 1, ring: 2, wave: 3 };
+  const scenes = $$("[data-scene]");
+  const world = { w: [1, 0, 0, 0], intensity: 1, x: 0, scale: 1 };
+  const worldTarget = { w: [1, 0, 0, 0], intensity: 1, x: 0, scale: 1 };
+
+  const pickScene = () => {
+    const mid = window.innerHeight * 0.5;
+    let active = null;
+    for (const s of scenes) {
+      const r = s.getBoundingClientRect();
+      if (r.top <= mid && r.bottom >= mid) { active = s; break; }
+    }
+    if (!active) return;
+    const idx = SHAPES[active.dataset.scene] ?? 0;
+    worldTarget.w = [0, 0, 0, 0];
+    worldTarget.w[idx] = 1;
+    const narrow = window.innerWidth < 900;
+    // on small screens the shapes sit behind the text, so keep them subtler there
+    const full = active.id === "hero" || active.classList.contains("cta");
+    worldTarget.intensity = Number(active.dataset.intensity || 1) * (narrow && !full ? 0.55 : 1);
+    worldTarget.x = narrow ? 0 : Number(active.dataset.x || 0);
+    worldTarget.scale = Number(active.dataset.scale || 1);
+  };
+
+  function initWorld() {
+    const canvas = $("#world");
+    if (!canvas || typeof THREE === "undefined") return false;
     let renderer;
-    try { renderer = new THREE.WebGLRenderer({ canvas, antialias: false, alpha: true, powerPreference: "high-performance" }); }
-    catch (err) { return; }
-    const dpr = Math.min(window.devicePixelRatio, 2);
+    try { renderer = new THREE.WebGLRenderer({ canvas, antialias: false, alpha: false, powerPreference: "high-performance" }); }
+    catch (err) { return false; }
+    const small = window.innerWidth < 700;
+    const dpr = Math.min(window.devicePixelRatio, small ? 1.75 : 1.5);
     renderer.setPixelRatio(dpr);
+    renderer.setClearColor(0x000000, 1);
 
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(45, 1, 0.1, 100);
     camera.position.set(0, 0, 11);
 
-    const small = window.innerWidth < 700;
-    const COUNT = small ? 6000 : 14000;
-    const positions = new Float32Array(COUNT * 3);
-    const rand = new Float32Array(COUNT);
+    /* --- build the four shapes --- */
+    const N = small ? 7000 : 16000;
+    const sphere = new Float32Array(N * 3), cube = new Float32Array(N * 3), ringP = new Float32Array(N * 3), wave = new Float32Array(N * 3), rnd = new Float32Array(N);
     const golden = Math.PI * (3 - Math.sqrt(5));
-    for (let i = 0; i < COUNT; i++) {
+    const gauss = () => (Math.random() + Math.random() + Math.random() - 1.5) / 1.5;
+
+    // isometric rotation so the cube reads like the AQ logo mark
+    const ry = Math.PI / 4, rx = Math.atan(1 / Math.sqrt(2));
+    const iso = (x, y, z) => {
+      const x1 = x * Math.cos(ry) + z * Math.sin(ry), z1 = -x * Math.sin(ry) + z * Math.cos(ry);
+      return [x1, y * Math.cos(rx) - z1 * Math.sin(rx), y * Math.sin(rx) + z1 * Math.cos(rx)];
+    };
+    const corners = [];
+    for (let a = -1; a <= 1; a += 2) for (let b = -1; b <= 1; b += 2) for (let c = -1; c <= 1; c += 2) corners.push([a, b, c]);
+    const edges = [];
+    for (let i = 0; i < 8; i++) for (let j = i + 1; j < 8; j++) {
+      const d = corners[i].reduce((s, v, k) => s + (v !== corners[j][k] ? 1 : 0), 0);
+      if (d === 1) edges.push([corners[i], corners[j]]);
+    }
+    const H = 1.95;
+    const cols = Math.ceil(Math.sqrt(N * 1.9)), rows = Math.ceil(N / cols);
+
+    for (let i = 0; i < N; i++) {
+      rnd[i] = Math.random();
+      // sphere: fibonacci shell + inner volume
       let x, y, z;
       if (i % 4 === 0) {
-        // inner volume for depth
-        const r = Math.cbrt(Math.random()) * 2.6;
-        const t = Math.random() * Math.PI * 2, ph = Math.acos(2 * Math.random() - 1);
+        const r = Math.cbrt(Math.random()) * 2.6, t = Math.random() * Math.PI * 2, ph = Math.acos(2 * Math.random() - 1);
         x = r * Math.sin(ph) * Math.cos(t); y = r * Math.sin(ph) * Math.sin(t); z = r * Math.cos(ph);
       } else {
-        // fibonacci shell
-        const yy = 1 - (i / (COUNT - 1)) * 2, rr = Math.sqrt(1 - yy * yy), th = golden * i;
+        const yy = 1 - (i / (N - 1)) * 2, rr = Math.sqrt(1 - yy * yy), th = golden * i;
         x = Math.cos(th) * rr * 3; y = yy * 3; z = Math.sin(th) * rr * 3;
       }
-      positions.set([x, y, z], i * 3);
-      rand[i] = Math.random();
+      sphere.set([x, y, z], i * 3);
+
+      // cube: bright edges + faces
+      let c;
+      if (Math.random() < 0.38) {
+        const [a, b] = edges[(Math.random() * edges.length) | 0], t = Math.random();
+        c = [(a[0] + (b[0] - a[0]) * t) * H, (a[1] + (b[1] - a[1]) * t) * H, (a[2] + (b[2] - a[2]) * t) * H];
+      } else {
+        const axis = (Math.random() * 3) | 0, sign = Math.random() < 0.5 ? -1 : 1;
+        c = [(Math.random() * 2 - 1) * H, (Math.random() * 2 - 1) * H, (Math.random() * 2 - 1) * H];
+        c[axis] = sign * H;
+      }
+      cube.set(iso(c[0], c[1], c[2]), i * 3);
+
+      // ring: three-armed galaxy, tilted toward the camera
+      const r = 1.6 + Math.pow(Math.random(), 0.8) * 5;
+      const arm = (i % 3) * (Math.PI * 2 / 3);
+      const ang = arm + r * 0.75 + gauss() * (0.5 / Math.sqrt(r));
+      let gx = Math.cos(ang) * r, gz = Math.sin(ang) * r, gy = gauss() * 0.18 * (1 + (6.6 - r) * 0.08);
+      const tilt = 1.12;
+      ringP.set([gx, gy * Math.cos(tilt) - gz * Math.sin(tilt), gy * Math.sin(tilt) + gz * Math.cos(tilt)], i * 3);
+
+      // wave: flowing grid "landscape"
+      const cx = i % cols, cz = (i / cols) | 0;
+      wave.set([(cx / (cols - 1) - 0.5) * 22, -2.6, (cz / (rows - 1) - 0.5) * 14 - 2], i * 3);
     }
+
     const geo = new THREE.BufferGeometry();
-    geo.setAttribute("position", new THREE.BufferAttribute(positions, 3));
-    geo.setAttribute("aRand", new THREE.BufferAttribute(rand, 1));
+    geo.setAttribute("position", new THREE.BufferAttribute(sphere, 3));
+    geo.setAttribute("aCube", new THREE.BufferAttribute(cube, 3));
+    geo.setAttribute("aRing", new THREE.BufferAttribute(ringP, 3));
+    geo.setAttribute("aWave", new THREE.BufferAttribute(wave, 3));
+    geo.setAttribute("aRand", new THREE.BufferAttribute(rnd, 1));
 
     const noise = `
       vec3 mod289(vec3 x){return x-floor(x*(1.0/289.0))*289.0;}
@@ -298,38 +494,49 @@
         p0*=norm.x; p1*=norm.y; p2*=norm.z; p3*=norm.w;
         vec4 m=max(0.6-vec4(dot(x0,x0),dot(x1,x1),dot(x2,x2),dot(x3,x3)),0.0); m=m*m;
         return 42.0*dot(m*m,vec4(dot(p0,x0),dot(p1,x1),dot(p2,x2),dot(p3,x3)));
-      }`;
+      }
+      vec3 rotY(vec3 p, float a){ float c=cos(a), s=sin(a); return vec3(c*p.x+s*p.z, p.y, -s*p.x+c*p.z); }
+      vec3 rotAxis(vec3 p, vec3 ax, float a){ float c=cos(a), s=sin(a); return p*c + cross(ax,p)*s + ax*dot(ax,p)*(1.0-c); }`;
 
     const uniforms = {
-      uTime: { value: 0 },
-      uScroll: { value: 0 },
-      uMouse: { value: new THREE.Vector2() },
-      uSize: { value: small ? 40 : 34 },
-      uPixelRatio: { value: dpr },
-      uOpacity: { value: 0 }
+      uTime: { value: 0 }, uW: { value: new THREE.Vector4(1, 0, 0, 0) },
+      uMouse: { value: new THREE.Vector2() }, uSize: { value: small ? 42 : 36 },
+      uPixelRatio: { value: dpr }, uOpacity: { value: 0 }
     };
-    const mat = new THREE.ShaderMaterial({
-      uniforms,
-      transparent: true,
-      depthWrite: false,
-      blending: THREE.AdditiveBlending,
+    const material = new THREE.ShaderMaterial({
+      uniforms, transparent: true, depthWrite: false, blending: THREE.AdditiveBlending,
       vertexShader: noise + `
-        uniform float uTime; uniform float uScroll; uniform vec2 uMouse; uniform float uSize; uniform float uPixelRatio;
-        attribute float aRand;
+        uniform float uTime; uniform vec4 uW; uniform vec2 uMouse; uniform float uSize; uniform float uPixelRatio;
+        attribute vec3 aCube; attribute vec3 aRing; attribute vec3 aWave; attribute float aRand;
         varying float vMix; varying float vGlow;
         void main(){
-          vec3 p = position;
-          float n = snoise(p * 0.45 + vec3(uTime * 0.12, uTime * 0.08, 0.0));
-          float n2 = snoise(p * 1.4 - vec3(0.0, uTime * 0.2, uTime * 0.1));
-          p *= 1.0 + n * 0.22 + n2 * 0.05;
-          p += normalize(p + 0.0001) * uScroll * (1.5 + aRand * 5.0);
+          float t = uTime;
+          // sphere: breathing noise surface
+          float n = snoise(position * 0.45 + vec3(t * 0.12, t * 0.08, 0.0));
+          vec3 sph = rotY(position * (1.0 + n * 0.22), t * 0.07);
+          // cube: slow turn with a soft shimmer
+          vec3 cub = rotY(aCube, t * 0.12) * (1.0 + snoise(aCube * 0.8 + t * 0.3) * 0.03);
+          // galaxy: spins faster near the centre
+          float r = length(aRing);
+          vec3 gal = rotAxis(aRing, normalize(vec3(0.0, cos(1.12), sin(1.12))), t * (0.35 / (0.6 + r * 0.25)));
+          // wave: rolling landscape
+          vec3 wv = aWave;
+          wv.y += (sin(wv.x * 0.5 + t * 0.9) + cos(wv.z * 0.65 + t * 0.7)) * 0.42 + snoise(vec3(wv.xz * 0.18, t * 0.15)) * 0.6;
+
+          vec3 p = sph * uW.x + cub * uW.y + gal * uW.z + wv * uW.w;
+          // dissolve turbulence while morphing between shapes
+          float morph = 1.0 - max(max(uW.x, uW.y), max(uW.z, uW.w));
+          vec3 q = p * 0.35 + vec3(t * 0.2);
+          p += vec3(snoise(q), snoise(q + 17.0), snoise(q + 31.0)) * morph * 2.4 * (0.4 + aRand);
+          // gentle pull toward the pointer
           vec3 dir = normalize(vec3(uMouse, 0.6));
-          p += dir * smoothstep(0.6, 1.0, dot(normalize(p + 0.0001), dir)) * 0.35;
+          p += dir * smoothstep(0.6, 1.0, dot(normalize(p + 0.0001), dir)) * 0.3 * (uW.x + uW.y);
+
           vec4 mv = modelViewMatrix * vec4(p, 1.0);
           gl_Position = projectionMatrix * mv;
-          gl_PointSize = uSize * uPixelRatio * (0.35 + aRand * 0.9) / -mv.z;
-          vMix = clamp(n * 0.6 + 0.5 + position.y * 0.08, 0.0, 1.0);
-          vGlow = 0.35 + 0.65 * smoothstep(-0.4, 0.8, n);
+          gl_PointSize = uSize * uPixelRatio * (0.35 + aRand * 0.9) * (1.0 + uW.y * 0.25) / -mv.z;
+          vMix = clamp(n * 0.5 + 0.5 + p.y * 0.07 + p.x * 0.03, 0.0, 1.0);
+          vGlow = 0.4 + 0.6 * smoothstep(-0.5, 0.8, n) + uW.y * 0.25;
         }`,
       fragmentShader: `
         uniform float uOpacity;
@@ -338,82 +545,112 @@
           float d = length(gl_PointCoord - 0.5);
           if (d > 0.5) discard;
           float s = pow(1.0 - d * 2.0, 2.2);
-          vec3 c1 = vec3(0.37, 0.92, 0.83);
-          vec3 c2 = vec3(0.23, 0.51, 0.96);
-          vec3 c3 = vec3(0.55, 0.36, 0.96);
+          vec3 c1 = vec3(0.37, 0.92, 0.83), c2 = vec3(0.23, 0.51, 0.96), c3 = vec3(0.55, 0.36, 0.96);
           vec3 col = vMix < 0.5 ? mix(c1, c2, vMix * 2.0) : mix(c2, c3, (vMix - 0.5) * 2.0);
           gl_FragColor = vec4(col, s * vGlow * uOpacity * 0.75);
         }`
     });
-    const core = new THREE.Points(geo, mat);
-    scene.add(core);
+    const points = new THREE.Points(geo, material);
+    const group = new THREE.Group();
+    group.add(points);
+    scene.add(group);
 
-    // soft central glow
-    const glowCanvas = document.createElement("canvas");
-    glowCanvas.width = glowCanvas.height = 256;
-    const g = glowCanvas.getContext("2d");
+    // soft core glow
+    const gc = document.createElement("canvas");
+    gc.width = gc.height = 256;
+    const g = gc.getContext("2d");
     const grd = g.createRadialGradient(128, 128, 0, 128, 128, 128);
-    grd.addColorStop(0, "rgba(90,160,255,0.55)");
-    grd.addColorStop(0.35, "rgba(80,90,240,0.18)");
+    grd.addColorStop(0, "rgba(90,160,255,0.5)");
+    grd.addColorStop(0.35, "rgba(80,90,240,0.16)");
     grd.addColorStop(1, "rgba(0,0,0,0)");
     g.fillStyle = grd; g.fillRect(0, 0, 256, 256);
-    const glow = new THREE.Sprite(new THREE.SpriteMaterial({ map: new THREE.CanvasTexture(glowCanvas), blending: THREE.AdditiveBlending, transparent: true, depthWrite: false, opacity: 0 }));
+    const glow = new THREE.Sprite(new THREE.SpriteMaterial({ map: new THREE.CanvasTexture(gc), blending: THREE.AdditiveBlending, transparent: true, depthWrite: false, opacity: 0 }));
     glow.scale.set(13, 13, 1);
-    scene.add(glow);
+    group.add(glow);
 
-    // distant dust
-    const DUST = small ? 500 : 1200;
-    const dpos = new Float32Array(DUST * 3);
-    for (let i = 0; i < DUST; i++) dpos.set([(Math.random() - 0.5) * 40, (Math.random() - 0.5) * 24, (Math.random() - 0.5) * 20 - 4], i * 3);
-    const dgeo = new THREE.BufferGeometry();
-    dgeo.setAttribute("position", new THREE.BufferAttribute(dpos, 3));
-    const dust = new THREE.Points(dgeo, new THREE.PointsMaterial({ color: 0x8aa4ff, size: 0.035, transparent: true, opacity: 0.5, depthWrite: false, blending: THREE.AdditiveBlending }));
-    scene.add(dust);
+    // distant stars with slow parallax
+    const S = small ? 600 : 1500;
+    const sp = new Float32Array(S * 3);
+    for (let i = 0; i < S; i++) sp.set([(Math.random() - 0.5) * 50, (Math.random() - 0.5) * 60, -6 - Math.random() * 20], i * 3);
+    const sgeo = new THREE.BufferGeometry();
+    sgeo.setAttribute("position", new THREE.BufferAttribute(sp, 3));
+    const stars = new THREE.Points(sgeo, new THREE.PointsMaterial({ color: 0x9fb4ff, size: 0.05, transparent: true, opacity: 0.55, depthWrite: false, blending: THREE.AdditiveBlending }));
+    scene.add(stars);
 
-    const layout = () => {
-      const w = canvas.clientWidth, h = canvas.clientHeight;
+    // cinematic bloom on larger screens
+    let composer = null, bloom = null;
+    if (!small && THREE.EffectComposer && THREE.UnrealBloomPass) {
+      composer = new THREE.EffectComposer(renderer);
+      composer.addPass(new THREE.RenderPass(scene, camera));
+      bloom = new THREE.UnrealBloomPass(new THREE.Vector2(256, 256), 0.8, 0.6, 0.0);
+      composer.addPass(bloom);
+    }
+
+    const resize = () => {
+      const w = window.innerWidth, h = window.innerHeight;
       renderer.setSize(w, h, false);
+      if (composer) { composer.setSize(w, h); bloom.resolution.set(w / 2, h / 2); }
       camera.aspect = w / h;
       camera.updateProjectionMatrix();
-      const s = w < 700 ? 0.78 : 1;
-      core.scale.setScalar(s);
-      glow.scale.set(13 * s, 13 * s, 1);
-      core.position.y = glow.position.y = w < 700 ? -0.3 : -0.2;
     };
-    layout();
-    window.addEventListener("resize", layout);
+    resize();
+    window.addEventListener("resize", resize);
 
-    const mouse = new THREE.Vector2(), target = new THREE.Vector2();
+    const mouse = new THREE.Vector2(), mTarget = new THREE.Vector2();
     window.addEventListener("pointermove", (e) => {
-      target.set((e.clientX / window.innerWidth) * 2 - 1, -((e.clientY / window.innerHeight) * 2 - 1));
+      mTarget.set((e.clientX / window.innerWidth) * 2 - 1, -((e.clientY / window.innerHeight) * 2 - 1));
     }, { passive: true });
 
-    let visible = true;
-    if ("IntersectionObserver" in window) new IntersectionObserver(([e]) => { visible = e.isIntersecting; }).observe(canvas);
-
     const start = performance.now();
-    const render = () => {
-      const t = (performance.now() - start) / 1000;
-      mouse.lerp(target, 0.04);
-      const sp = clamp(window.scrollY / window.innerHeight, 0, 1);
-      uniforms.uTime.value = t;
-      uniforms.uScroll.value = sp;
-      uniforms.uMouse.value.copy(mouse);
-      // fade in after the intro
+    const baseScale = small ? 0.78 : 1;
+    let last = start;
+    return (now) => {
+      const t = (now - start) / 1000;
+      const dt = Math.min((now - last) / 1000, 0.25);
+      last = now;
+      // same morph speed at any frame rate
+      const k = reduceMotion ? 1 : 1 - Math.pow(1 - 0.035, dt * 60);
+      for (let i = 0; i < 4; i++) world.w[i] = lerp(world.w[i], worldTarget.w[i], k);
+      world.intensity = lerp(world.intensity, worldTarget.intensity, k);
+      world.x = lerp(world.x, worldTarget.x, k);
+      world.scale = lerp(world.scale, worldTarget.scale, k);
+      mouse.lerp(mTarget, 1 - Math.pow(0.96, dt * 60));
+
       const fade = reduceMotion ? 1 : clamp((t - 1.1) / 1.6, 0, 1);
-      uniforms.uOpacity.value = fade * (1 - sp * 0.85);
-      glow.material.opacity = fade * 0.9 * (1 - sp);
-      core.rotation.y = t * 0.06 + mouse.x * 0.35;
-      core.rotation.x = -mouse.y * 0.25 + sp * 0.5;
-      dust.rotation.y = t * 0.01;
-      camera.position.z = 11 - sp * 2.5;
-      renderer.render(scene, camera);
+      uniforms.uTime.value = reduceMotion ? 8 : t;
+      uniforms.uW.value.set(world.w[0], world.w[1], world.w[2], world.w[3]);
+      uniforms.uMouse.value.copy(mouse);
+      uniforms.uOpacity.value = fade * world.intensity;
+      glow.material.opacity = fade * world.intensity * 0.7 * (world.w[0] + world.w[1] * 0.35);
+
+      group.position.x = world.x;
+      group.position.y = small ? -0.25 : -0.15;
+      group.scale.setScalar(baseScale * world.scale);
+      group.rotation.x = -mouse.y * 0.18;
+      group.rotation.y = mouse.x * 0.25;
+
+      const sy = window.scrollY;
+      stars.position.y = (sy * 0.0025) % 30;
+      camera.position.x = mouse.x * 0.4;
+      camera.position.y = mouse.y * 0.25;
+      camera.lookAt(0, 0, 0);
+
+      if (composer) composer.render(); else renderer.render(scene, camera);
     };
-    if (reduceMotion) { render(); return; }
-    const loop = () => { if (visible) render(); requestAnimationFrame(loop); };
-    loop();
   }
 
-  if (document.readyState === "complete") initHero();
-  else window.addEventListener("load", initHero);
+  /* ---------- single animation loop ---------- */
+  const renderWorld = initWorld();
+  const frame = (now) => {
+    onScrollFx();
+    pickScene();
+    renderRing();
+    if (cursor && finePointer) {
+      cur.x = lerp(cur.x, cur.tx, 0.2); cur.y = lerp(cur.y, cur.ty, 0.2);
+      cursor.style.transform = `translate3d(${cur.x}px, ${cur.y}px, 0)`;
+    }
+    if (renderWorld && !document.hidden) renderWorld(now);
+    requestAnimationFrame(frame);
+  };
+  requestAnimationFrame(frame);
 })();

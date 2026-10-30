@@ -41,7 +41,10 @@
       <span>AQSOFT</span>
     </div>
   </div>
+  <canvas id="world" aria-hidden="true"></canvas>
   <div class="grain" aria-hidden="true"></div>
+  <div class="progress" aria-hidden="true"><span id="progress"></span></div>
+  <div class="cursor" id="cursor" aria-hidden="true"></div>
 
   <!-- ================= HEADER ================= -->
   <header class="header" id="header">
@@ -53,7 +56,8 @@
       <nav class="nav" id="nav" aria-label="Main">
         <a href="#products">Products</a>
         <a href="#pos">AQ POS</a>
-        <a href="#solutions">Solutions</a>
+        <a href="#services">Services</a>
+        <a href="#work" data-needs="projects">Work</a>
         <a href="#platform">Platform</a>
         <a href="#process">Process</a>
         <a href="#faq">FAQ</a>
@@ -65,8 +69,7 @@
 
   <main id="top">
     <!-- ================= HERO ================= -->
-    <section class="hero" id="hero">
-      <canvas id="hero-canvas" aria-hidden="true"></canvas>
+    <section class="hero" id="hero" data-scene="sphere" data-intensity="1">
       <div class="hero__vignette" aria-hidden="true"></div>
       <div class="container hero__content">
         <a href="#pos" class="pill reveal"><span class="pill__dot"></span>AI-powered business software <span class="pill__arrow">→</span></a>
@@ -86,7 +89,7 @@
     </section>
 
     <!-- ================= MANIFESTO ================= -->
-    <section class="manifesto" id="manifesto">
+    <section class="manifesto" id="manifesto" data-scene="cube" data-intensity="0.9" data-x="3">
       <div class="container">
         <span class="eyebrow">Who we are</span>
         <p class="manifesto__text" id="manifesto-text">We don't just write code. We design systems that sell, manage, predict and scale, so business owners can stop fighting their tools and start growing. Every product we ship is built on one idea: software should feel effortless, and work as hard as you do.</p>
@@ -94,7 +97,7 @@
     </section>
 
     <!-- ================= NUMBERS ================= -->
-    <section class="numbers">
+    <section class="numbers" data-scene="ring" data-intensity="0.55">
       <div class="container numbers__grid">
         <div class="num reveal"><strong data-count="6">6</strong><span>Products in the AQ Suite</span></div>
         <div class="num reveal"><strong data-count="6">6</strong><span>Growth &amp; build services</span></div>
@@ -104,7 +107,7 @@
     </section>
 
     <!-- ================= PRODUCTS (BENTO) ================= -->
-    <section class="section" id="products">
+    <section class="section" id="products" data-scene="ring" data-intensity="0.3">
       <div class="container">
         <div class="head">
           <span class="eyebrow reveal">The AQ Suite</span>
@@ -166,7 +169,7 @@
     </section>
 
     <!-- ================= POS SPOTLIGHT (SCROLLYTELLING) ================= -->
-    <section class="pos-section" id="pos">
+    <section class="pos-section" id="pos" data-scene="ring" data-intensity="0.14">
       <div class="container">
         <div class="head">
           <span class="eyebrow reveal">Flagship product</span>
@@ -248,58 +251,90 @@
       </div>
     </section>
 
-    <!-- ================= SOLUTIONS (HORIZONTAL) ================= -->
-    <section class="hscroll" id="solutions">
-      <div class="hscroll__sticky">
-        <div class="container hscroll__head">
-          <span class="eyebrow">Solutions</span>
-          <h2>Websites that <em>grow</em> revenue.</h2>
-          <p class="hscroll__hint">Modern websites, stores and growth services, from build to traffic to sales.</p>
+    <!-- ================= SERVICES (3D RING) ================= -->
+    <section class="services" id="services" data-scene="wave" data-intensity="0.9">
+      <div class="container head">
+        <span class="eyebrow reveal">What we offer</span>
+        <h2 data-split>Everything your brand needs to <em>grow online.</em></h2>
+        <p class="reveal">Drag, swipe or use the arrows to explore our services.</p>
+      </div>
+      <div class="ring-stage" id="ring-stage">
+        <div class="ring" id="ring">
+          <article class="rcard" data-index="0">
+            <div class="rcard__inner">
+              <span class="rcard__n">01</span>
+              <h3>Modern Websites</h3>
+              <p>Websites built the modern way: fast, animated, mobile-first and easy for your team to update.</p>
+              <ul><li>Responsive</li><li>CMS</li><li>Motion</li></ul>
+            </div>
+          </article>
+          <article class="rcard" data-index="1">
+            <div class="rcard__inner">
+              <span class="rcard__n">02</span>
+              <h3>E-commerce Solutions</h3>
+              <p>Shopify stores, app integrations and Framer sites that look premium and sell from day one.</p>
+              <ul><li>Shopify</li><li>App integrations</li><li>Framer</li></ul>
+            </div>
+          </article>
+          <article class="rcard" data-index="2">
+            <div class="rcard__inner">
+              <span class="rcard__n">03</span>
+              <h3>CRO</h3>
+              <p>We test, measure and refine every step of your funnel so more visitors become customers.</p>
+              <ul><li>A/B testing</li><li>Heatmaps</li><li>Funnels</li></ul>
+            </div>
+          </article>
+          <article class="rcard" data-index="3">
+            <div class="rcard__inner">
+              <span class="rcard__n">04</span>
+              <h3>Full Stack Solutions</h3>
+              <p>Web apps, dashboards and APIs, from front end to database, built to scale with you.</p>
+              <ul><li>React</li><li>Node.js</li><li>APIs</li></ul>
+            </div>
+          </article>
+          <article class="rcard" data-index="4">
+            <div class="rcard__inner">
+              <span class="rcard__n">05</span>
+              <h3>Next.js Sites</h3>
+              <p>Lightning-fast, SEO-ready sites with server rendering and a CMS your team can edit.</p>
+              <ul><li>Next.js</li><li>Headless CMS</li><li>Vercel</li></ul>
+            </div>
+          </article>
+          <article class="rcard" data-index="5">
+            <div class="rcard__inner">
+              <span class="rcard__n">06</span>
+              <h3>SEO</h3>
+              <p>Technical SEO, content and on-page optimization that grow organic traffic month after month.</p>
+              <ul><li>Technical SEO</li><li>Content</li><li>Local SEO</li></ul>
+            </div>
+          </article>
+          <article class="rcard" data-index="6">
+            <div class="rcard__inner">
+              <span class="rcard__n">07</span>
+              <h3>Social Media Management</h3>
+              <p>Content, design and posting across Facebook, Instagram and LinkedIn that builds your brand.</p>
+              <ul><li>Content</li><li>Scheduling</li><li>Paid ads</li></ul>
+            </div>
+          </article>
+          <article class="rcard" data-index="7">
+            <div class="rcard__inner">
+              <span class="rcard__n">08</span>
+              <h3>POS &amp; Business Software</h3>
+              <p>AQ POS, ERP, CRM and custom software that run your day-to-day operations.</p>
+              <ul><li>AQ POS</li><li>ERP / CRM</li><li>Custom software</li></ul>
+            </div>
+          </article>
         </div>
-        <div class="hscroll__track" id="hscroll-track">
-          <article class="scard spot">
-            <span class="scard__n">01</span>
-            <h3>E-commerce Solutions</h3>
-            <p>Shopify stores, app integrations and Framer sites that look premium and sell from day one.</p>
-            <ul><li>Shopify</li><li>App integrations</li><li>Framer</li></ul>
-          </article>
-          <article class="scard spot">
-            <span class="scard__n">02</span>
-            <h3>CRO</h3>
-            <p>Conversion rate optimization: we test, measure and refine so more visitors become customers.</p>
-            <ul><li>A/B testing</li><li>Analytics</li><li>UX audits</li></ul>
-          </article>
-          <article class="scard spot">
-            <span class="scard__n">03</span>
-            <h3>Full Stack Solutions</h3>
-            <p>Web apps, dashboards and APIs, front end to database, built to scale with your business.</p>
-            <ul><li>React</li><li>Node.js</li><li>Databases &amp; APIs</li></ul>
-          </article>
-          <article class="scard spot">
-            <span class="scard__n">04</span>
-            <h3>Next.js Sites</h3>
-            <p>Lightning-fast, SEO-ready websites with modern animation and a CMS your team can edit.</p>
-            <ul><li>Next.js</li><li>Headless CMS</li><li>Vercel</li></ul>
-          </article>
-          <article class="scard spot">
-            <span class="scard__n">05</span>
-            <h3>SEO</h3>
-            <p>Technical SEO, content and on-page optimization that grow your organic traffic month after month.</p>
-            <ul><li>Technical SEO</li><li>Content</li><li>Local SEO</li></ul>
-          </article>
-          <article class="scard spot">
-            <span class="scard__n">06</span>
-            <h3>Social Media Management</h3>
-            <p>Content, design and posting across Facebook, Instagram and LinkedIn that builds your brand.</p>
-            <ul><li>Content creation</li><li>Scheduling</li><li>Growth</li></ul>
-          </article>
-        </div>
-        <div class="container hscroll__progress" aria-hidden="true"><span id="hscroll-bar"></span></div>
+      </div>
+      <div class="ring-controls">
+        <button class="ring-btn" id="ring-prev" aria-label="Previous service"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M15 6l-6 6 6 6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        <span class="ring-count"><b id="ring-current">01</b> / 08</span>
+        <button class="ring-btn" id="ring-next" aria-label="Next service"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
       </div>
     </section>
 
     <!-- ================= PLATFORM ================= -->
-    <section class="section" id="platform">
+    <section class="section" id="platform" data-scene="cube" data-intensity="0.3" data-x="3.2">
       <div class="container platform">
         <div class="platform__visual" aria-hidden="true">
           <div class="stack" id="stack">
@@ -324,7 +359,7 @@
     </section>
 
     <!-- ================= INDUSTRIES ================= -->
-    <section class="industries" aria-label="Industries we serve">
+    <section class="industries" aria-label="Industries we serve" data-scene="ring" data-intensity="0.95">
       <div class="container head head--left">
         <span class="eyebrow reveal">Industries</span>
         <h2 data-split>Built for the businesses <em>around you.</em></h2>
@@ -342,7 +377,7 @@
     </section>
 
     <!-- ================= PROCESS ================= -->
-    <section class="section" id="process">
+    <section class="section" id="process" data-scene="wave" data-intensity="0.55">
       <div class="container">
         <div class="head">
           <span class="eyebrow reveal">How we work</span>
@@ -368,8 +403,32 @@
       </div>
     </section>
 
+    <!-- ================= PORTFOLIO (filled from assets/js/content.js) ================= -->
+    <section class="section work" id="work" data-scene="ring" data-intensity="0.25" hidden>
+      <div class="container">
+        <div class="head">
+          <span class="eyebrow reveal">Portfolio</span>
+          <h2 data-split>Work we're <em>proud of.</em></h2>
+          <p class="reveal">A selection of websites, stores and software we've designed and built.</p>
+        </div>
+        <div class="work__filters" id="work-filters" role="tablist" aria-label="Filter projects"></div>
+        <div class="work__grid" id="work-grid"></div>
+      </div>
+    </section>
+
+    <!-- ================= TEAM (filled from assets/js/content.js) ================= -->
+    <section class="section team" id="team" data-scene="cube" data-intensity="0.35" data-x="-3" hidden>
+      <div class="container">
+        <div class="head">
+          <span class="eyebrow reveal">The people</span>
+          <h2 data-split>Meet the minds behind <em>AQSOFT.</em></h2>
+        </div>
+        <div class="team__grid" id="team-grid"></div>
+      </div>
+    </section>
+
     <!-- ================= FAQ ================= -->
-    <section class="section" id="faq">
+    <section class="section" id="faq" data-scene="sphere" data-intensity="0.25" data-x="-3.2">
       <div class="container faq">
         <div class="faq__head">
           <span class="eyebrow reveal">FAQ</span>
@@ -402,7 +461,7 @@
     </section>
 
     <!-- ================= BIG CTA ================= -->
-    <section class="cta">
+    <section class="cta" data-scene="sphere" data-intensity="0.85" data-scale="1.15">
       <div class="cta__glow" aria-hidden="true"></div>
       <div class="container cta__inner">
         <h2 class="cta__title" data-split>Let's build what's <em>next.</em></h2>
@@ -412,7 +471,7 @@
     </section>
 
     <!-- ================= CONTACT ================= -->
-    <section class="section section--tight" id="contact">
+    <section class="section section--tight" id="contact" data-scene="wave" data-intensity="0.3">
       <div class="container contact spot">
         <div class="contact__info">
           <span class="eyebrow">Contact</span>
@@ -438,6 +497,7 @@
                 <option>AQ CRM</option>
                 <option>AQ HR &amp; Payroll</option>
                 <option>AQ Insights (AI)</option>
+                <option>Modern Website</option>
                 <option>E-commerce (Shopify / Framer)</option>
                 <option>CRO</option>
                 <option>Full Stack Solution</option>
@@ -466,7 +526,7 @@
           <p class="footer__tag">AI-powered business software and custom solutions.</p>
         </div>
         <div><h5>Products</h5><a href="#pos">AQ POS</a><a href="#products">AQ Commerce</a><a href="#products">AQ ERP</a><a href="#products">AQ CRM</a><a href="#products">AQ Insights</a></div>
-        <div><h5>Solutions</h5><a href="#solutions">E-commerce</a><a href="#solutions">CRO</a><a href="#solutions">Full Stack</a><a href="#solutions">Next.js Sites</a><a href="#solutions">SEO</a><a href="#solutions">Social Media</a></div>
+        <div><h5>Services</h5><a href="#services">Modern Websites</a><a href="#services">E-commerce</a><a href="#services">CRO</a><a href="#services">Full Stack</a><a href="#services">Next.js Sites</a><a href="#services">SEO</a><a href="#services">Social Media</a></div>
         <div><h5>Company</h5><a href="#platform">Platform</a><a href="#process">Process</a><a href="#faq">FAQ</a><a href="mailto:abdullah@aqsoft.tech">abdullah@aqsoft.tech</a></div>
       </div>
       <div class="footer__bottom"><span>© <span id="year">2026</span> AQSOFT. All rights reserved.</span><span>aqsoft.tech</span></div>
@@ -474,6 +534,9 @@
   </footer>
 
   <script src="assets/js/vendor/three.min.js" defer></script>
+  <script src="assets/js/vendor/three-bloom.js" defer></script>
+  <script src="assets/js/vendor/lenis.min.js" defer></script>
+  <script src="assets/js/content.js" defer></script>
   <script src="assets/js/main.js" defer></script>
 </body>
 </html>

@@ -60,7 +60,7 @@
   --gutter:clamp(16px, 5vw, 72px);
 }
 *{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+html{scroll-behavior:smooth;scroll-padding-top:70px;-webkit-text-size-adjust:100%}
 body{background:var(--bg);color:var(--ink);font-family:var(--sans);font-weight:400;line-height:1.6;overflow-x:hidden;-webkit-font-smoothing:antialiased}
 body.loading{overflow:hidden}
 a{color:inherit;text-decoration:none}
@@ -101,30 +101,30 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 
 /* ============ Nav ============ */
 .nav{position:fixed;top:0;left:0;right:0;z-index:100;transition:background .4s,backdrop-filter .4s,border-color .4s;border-bottom:1px solid transparent}
-.nav.scrolled{background:rgba(11,8,6,.72);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-color:var(--line)}
-.nav .wrap{display:flex;align-items:center;justify-content:space-between;height:76px}
-.brand{display:flex;align-items:center;gap:12px;font-family:var(--serif);font-size:1.45rem;letter-spacing:.14em}
-.brand svg{width:22px;height:32px}
-.brand small{display:block;font-family:var(--sans);font-size:.58rem;letter-spacing:.38em;color:var(--ink-mute);margin-top:-4px}
-.nav-links{display:flex;gap:36px;font-size:.78rem;letter-spacing:.2em;text-transform:uppercase}
-.nav-links a{position:relative;color:var(--ink-dim);transition:color .3s}
-.nav-links a::after{content:"";position:absolute;left:0;bottom:-6px;height:1px;width:100%;background:var(--gold);transform:scaleX(0);transform-origin:right;transition:transform .5s var(--ease)}
-.nav-links a:hover{color:var(--ink)}
+.nav.scrolled{background:rgba(7,19,56,.86);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-color:var(--line)}
+.nav .wrap{display:flex;align-items:center;justify-content:space-between;height:100px}
+.brand{display:flex;align-items:center;gap:14px;font-family:var(--serif);font-size:1.9rem;font-weight:600;letter-spacing:.12em}
+.brand svg{width:28px;height:40px}
+.brand small{display:block;font-family:var(--sans);font-size:.66rem;font-weight:400;letter-spacing:.38em;color:var(--ink-mute);margin-top:-4px}
+.nav-links{display:flex;gap:56px;font-size:1.02rem;font-weight:600;letter-spacing:.18em;text-transform:uppercase}
+.nav-links a{position:relative;color:var(--ink);transition:color .3s}
+.nav-links a::after{content:"";position:absolute;left:0;bottom:-8px;height:2px;width:100%;background:var(--gold);transform:scaleX(0);transform-origin:right;transition:transform .5s var(--ease)}
+.nav-links a:hover{color:var(--gold)}
 .nav-links a:hover::after{transform:scaleX(1);transform-origin:left}
-.nav-cta{display:flex;align-items:center;gap:10px;padding:10px 18px;border:1px solid var(--gold);border-radius:999px;font-size:.78rem;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);transition:background .3s,color .3s}
+.nav-cta{display:flex;align-items:center;gap:10px;padding:14px 26px;border:1.5px solid var(--gold);border-radius:999px;font-size:.95rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);transition:background .3s,color .3s}
 .nav-cta:hover{background:var(--gold);color:var(--bg)}
-.burger{display:none;width:44px;height:44px;position:relative}
-.burger i{position:absolute;left:11px;right:11px;height:1px;background:var(--ink);transition:transform .4s var(--ease),top .4s var(--ease)}
-.burger i:nth-child(1){top:18px}.burger i:nth-child(2){top:26px}
-.menu-open .burger i:nth-child(1){top:22px;transform:rotate(45deg)}
-.menu-open .burger i:nth-child(2){top:22px;transform:rotate(-45deg)}
-.drawer{position:fixed;inset:0;z-index:99;background:var(--bg);display:flex;flex-direction:column;justify-content:center;padding:0 var(--gutter);clip-path:circle(0% at calc(100% - 40px) 38px);transition:clip-path .8s var(--ease)}
-.menu-open .drawer{clip-path:circle(150% at calc(100% - 40px) 38px)}
+.burger{display:none;width:52px;height:52px;position:relative}
+.burger i{position:absolute;left:12px;right:12px;height:2px;background:var(--ink);transition:transform .4s var(--ease),top .4s var(--ease)}
+.burger i:nth-child(1){top:20px}.burger i:nth-child(2){top:30px}
+.menu-open .burger i:nth-child(1){top:25px;transform:rotate(45deg)}
+.menu-open .burger i:nth-child(2){top:25px;transform:rotate(-45deg)}
+.drawer{position:fixed;inset:0;z-index:99;background:var(--bg);display:flex;flex-direction:column;justify-content:center;padding:0 var(--gutter);clip-path:circle(0% at calc(100% - 40px) 50px);transition:clip-path .8s var(--ease)}
+.menu-open .drawer{clip-path:circle(150% at calc(100% - 40px) 50px)}
 .drawer a{font-family:var(--serif);font-size:clamp(2.4rem,11vw,3.6rem);line-height:1.25;opacity:0;transform:translateY(30px);transition:opacity .6s,transform .6s var(--ease)}
 .menu-open .drawer a{opacity:1;transform:none}
 .menu-open .drawer a:nth-child(2){transition-delay:.06s}.menu-open .drawer a:nth-child(3){transition-delay:.12s}.menu-open .drawer a:nth-child(4){transition-delay:.18s}
 .drawer .drawer-meta{margin-top:40px;color:var(--ink-dim);font-size:.9rem}
-@media (max-width:900px){.nav-links,.nav-cta{display:none}.burger{display:block}}
+@media (max-width:900px){.nav-links,.nav-cta{display:none}.burger{display:block}.nav .wrap{height:80px}.brand{font-size:1.6rem}}
 
 /* ============ Hero ============ */
 .hero{position:relative;height:100vh;height:100svh;min-height:620px;overflow:hidden;display:flex;align-items:center}
@@ -181,25 +181,13 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 
 section{position:relative}
 .taptap{height:8px;background:var(--taptap);opacity:.9}
-#menu{overflow:hidden;overflow:clip}
+#menu{overflow:hidden;overflow:clip;padding-top:clamp(60px,8vw,110px)}
 .section{padding:clamp(90px,14vw,180px) 0}
 .section-head{display:flex;justify-content:space-between;align-items:flex-end;gap:30px;flex-wrap:wrap;margin-bottom:clamp(44px,6vw,80px)}
 .h2{font-family:var(--serif);font-weight:400;font-size:clamp(2.6rem,7vw,5.6rem);line-height:.98;letter-spacing:-.01em}
 .h2{font-weight:600}
 .h2 em{color:var(--gold);font-weight:400}
 
-/* ============ Story (scroll-lit words) ============ */
-.story{padding:clamp(100px,16vw,200px) 0}
-.story-grid{display:grid;grid-template-columns:1fr 2.2fr;gap:clamp(30px,6vw,90px);align-items:start}
-.story-text{font-family:var(--serif);font-size:clamp(1.8rem,4.2vw,3.4rem);line-height:1.18}
-.story-text .w{color:rgba(244,234,217,.14);transition:color .4s}
-.story-text .w.lit{color:var(--ink)}
-.story-text .w.gold.lit{color:var(--gold);font-style:italic}
-.story-text .w.gold.lit:nth-of-type(3n){color:var(--pink)}
-.story-text .w.gold.lit:nth-of-type(3n+1){color:var(--teal)}
-.story-side{position:sticky;top:120px}
-.story-side p{color:var(--ink-dim);margin-top:18px;max-width:280px;font-size:.95rem}
-@media (max-width:800px){.story-grid{grid-template-columns:1fr}.story-side{position:static}}
 
 /* ============ Stats ============ */
 .stats{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
@@ -216,7 +204,7 @@ section{position:relative}
 .tab:hover{color:var(--ink);border-color:rgba(255,201,60,.5)}
 .tab.active{background:var(--gold);border-color:var(--gold);color:var(--bg);font-weight:600}
 .menu-stage{display:grid;grid-template-columns:1fr 1.1fr;gap:clamp(30px,5vw,80px);align-items:start}
-.menu-stage>.plate-wrap{position:sticky;top:130px}
+.menu-stage>.plate-wrap{position:sticky;top:150px}
 .plate-wrap{position:relative;aspect-ratio:1;max-width:520px;width:100%;margin:0 auto}
 .plate{position:absolute;inset:0;transition:transform 1.2s var(--ease)}
 .plate svg{width:100%;height:100%}
@@ -311,7 +299,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
 .action-bar svg{width:15px;height:15px}
 @media (max-width:700px){.action-bar{display:grid}footer{padding-bottom:110px}}
 
-.toast{position:fixed;left:50%;top:92px;z-index:160;transform:translate(-50%,-20px);opacity:0;padding:10px 18px;border-radius:999px;background:var(--gold);color:var(--bg);font-size:.8rem;font-weight:600;transition:all .4s var(--ease);pointer-events:none}
+.toast{position:fixed;left:50%;top:116px;z-index:160;transform:translate(-50%,-20px);opacity:0;padding:10px 18px;border-radius:999px;background:var(--gold);color:var(--bg);font-size:.8rem;font-weight:600;transition:all .4s var(--ease);pointer-events:none}
 .toast.show{opacity:1;transform:translate(-50%,0)}
 
 @media (prefers-reduced-motion:reduce){
@@ -348,13 +336,12 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
       <span>HOLY<small>RESTAURANT</small></span>
     </a>
     <nav class="nav-links" aria-label="Primary">
-      <a href="#story">Story</a>
       <a href="#menu">Menu</a>
       <a href="#dine">Dine</a>
       <a href="#visit">Visit</a>
     </nav>
     <a class="nav-cta" href="tel:+19085364912">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8 9.8a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2z"/></svg>
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8 9.8a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2z"/></svg>
       (908) 536-4912
     </a>
     <button class="burger" aria-label="Open menu" aria-expanded="false"><i></i><i></i></button>
@@ -362,7 +349,6 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
 </header>
 
 <div class="drawer" aria-hidden="true">
-  <a href="#story">Story</a>
   <a href="#menu">Menu</a>
   <a href="#dine">Dine</a>
   <a href="#visit">Visit</a>
@@ -396,37 +382,6 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
     <div class="scroll-cue" aria-hidden="true">Scroll<i></i></div>
   </section>
 
-  <!-- Marquee -->
-  <div class="marquee" aria-hidden="true">
-    <div class="marquee-track">
-      <span>Byenvini</span><span>Dine-in</span><span>Bon apeti</span><span>Curbside pickup</span><span>Manje lakay</span><span>Delivery</span><span>Manje Ayisyen</span><span>Mèsi anpil</span><span>Open daily from 8 AM</span>
-      <span>Byenvini</span><span>Dine-in</span><span>Bon apeti</span><span>Curbside pickup</span><span>Manje lakay</span><span>Delivery</span><span>Manje Ayisyen</span><span>Mèsi anpil</span><span>Open daily from 8 AM</span>
-    </div>
-  </div>
-
-  <!-- Story -->
-  <section class="story" id="story">
-    <div class="wrap story-grid">
-      <div class="story-side reveal">
-        <p class="eyebrow">Lakay · Our story</p>
-        <p>Rated 4.8 by our neighbours in Elizabeth. Come as you are; leave a little fuller.</p>
-      </div>
-      <p class="story-text" data-words>
-        In our kitchen, every plate tastes like *lakay* — like home. Food is something *sacred* here, because it brings people *together.* Grandparents and grandkids, old friends and new neighbours, all around one table, sharing food cooked with *love* and served with a big *smile.*
-      </p>
-    </div>
-  </section>
-
-  <!-- Stats -->
-  <div class="wrap">
-    <div class="stats">
-      <div class="stat reveal"><div class="num" data-count="4.8" data-dec="1">0</div><p>Google rating</p></div>
-      <div class="stat reveal d1"><div class="num" data-count="46">0</div><p>Guest reviews</p></div>
-      <div class="stat reveal d2"><div class="num">$20–30</div><p>Per person</p></div>
-      <div class="stat reveal d3"><div class="num" data-count="3">0</div><p>Ways to dine</p></div>
-    </div>
-  </div>
-
   <!-- Menu -->
   <section class="section" id="menu">
     <div class="wrap">
@@ -455,6 +410,24 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
       </div>
     </div>
   </section>
+
+  <!-- Marquee -->
+  <div class="marquee" aria-hidden="true">
+    <div class="marquee-track">
+      <span>Byenvini</span><span>Dine-in</span><span>Bon apeti</span><span>Curbside pickup</span><span>Manje lakay</span><span>Delivery</span><span>Manje Ayisyen</span><span>Mèsi anpil</span><span>Open daily from 8 AM</span>
+      <span>Byenvini</span><span>Dine-in</span><span>Bon apeti</span><span>Curbside pickup</span><span>Manje lakay</span><span>Delivery</span><span>Manje Ayisyen</span><span>Mèsi anpil</span><span>Open daily from 8 AM</span>
+    </div>
+  </div>
+
+  <!-- Stats -->
+  <div class="wrap">
+    <div class="stats">
+      <div class="stat reveal"><div class="num" data-count="4.8" data-dec="1">0</div><p>Google rating</p></div>
+      <div class="stat reveal d1"><div class="num" data-count="46">0</div><p>Guest reviews</p></div>
+      <div class="stat reveal d2"><div class="num">$20–30</div><p>Per person</p></div>
+      <div class="stat reveal d3"><div class="num" data-count="3">0</div><p>Ways to dine</p></div>
+    </div>
+  </div>
 
   <!-- Ways to dine -->
   <section class="section" id="dine" style="padding-top:0">
@@ -678,7 +651,6 @@ const HOURS = { 0:[8,20], 1:[8,21], 2:[8,21], 3:[8,20], 4:[8,22], 5:[8,22], 6:[8
     const y = scrollY;
     nav.classList.toggle("scrolled", y > 40);
     actionBar.classList.toggle("show", y > innerHeight * .6);
-    litWords();
   };
   addEventListener("scroll", onScroll, { passive: true });
 
@@ -766,21 +738,6 @@ const HOURS = { 0:[8,20], 1:[8,21], 2:[8,21], 3:[8,20], 4:[8,22], 5:[8,22], 6:[8
     io.unobserve(e.target);
   }), { threshold: .15, rootMargin: "0px 0px -60px 0px" });
   $$(".reveal").forEach(el => io.observe(el));
-
-  /* ---------- Story: words light up while scrolling ---------- */
-  const story = $("[data-words]");
-  story.innerHTML = story.textContent.trim().split(/\s+/).map(w => {
-    const gold = /^\*.*\*[.,]?$/.test(w);
-    return `<span class="w${gold ? " gold" : ""}">${w.replace(/\*/g, "")} </span>`;
-  }).join("");
-  const words = $$(".w", story);
-  function litWords() {
-    const r = story.getBoundingClientRect();
-    const k = (innerHeight * .85 - r.top) / (r.height + innerHeight * .35);
-    const n = Math.floor(Math.max(0, Math.min(1, k)) * words.length);
-    words.forEach((w, i) => w.classList.toggle("lit", i < n));
-  }
-  litWords();
 
   /* ---------- Menu: tabs + generated plate ---------- */
   const tabs = $(".menu-tabs"), list = $("#dishList"), plate = $("#plate"), plateLabel = $("#plateLabel");

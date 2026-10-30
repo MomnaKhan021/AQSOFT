@@ -80,7 +80,7 @@ The `CNAME` file is only used by GitHub Pages and can be ignored there.
 
 ## Before going live: things to update
 
-- **Email**: the site uses `abdullah@aqsoft.tech`. Create that mailbox (or change it in `index.html` and `assets/js/main.js`).
+- **Email**: the site uses `info@aqsoft.tech` (general enquiries) and `abdullah@aqsoft.tech` (direct). The contact form sends to info@ and copies abdullah@.
 - **Contact form**: currently opens the visitor's email app. For direct form submissions, connect a service like Formspree and point the form at it.
 - **Work section**: shows example project types. Replace with real case studies when ready.
 - **Brand colors**: edit the variables at the top of `assets/css/style.css`.

@@ -110,6 +110,12 @@
 
   $("#year").textContent = new Date().getFullYear();
 
+  /* footer link groups: collapsible on phones, always open on larger screens */
+  const footMq = window.matchMedia("(max-width: 600px)");
+  const syncFooter = () => $$(".fcol").forEach((d) => { d.open = !footMq.matches; });
+  syncFooter();
+  footMq.addEventListener("change", syncFooter);
+
   /* ---------- split headings into words ---------- */
   $$("[data-split]").forEach((el) => {
     let i = 0;
@@ -367,7 +373,7 @@
     const d = new FormData(form);
     const subject = `Website enquiry: ${d.get("service")}`;
     const body = `Name: ${d.get("name")}\nEmail: ${d.get("email")}\nCompany: ${d.get("company") || "-"}\nInterested in: ${d.get("service")}\n\n${d.get("message")}`;
-    window.location.href = `mailto:abdullah@aqsoft.tech?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    window.location.href = `mailto:info@aqsoft.tech?cc=abdullah@aqsoft.tech&subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
     note.style.color = "#5eead4";
     note.textContent = "Thanks! Your email app should open with the message ready to send.";
   });

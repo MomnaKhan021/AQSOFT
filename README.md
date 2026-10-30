@@ -2,8 +2,8 @@
 
 Company website for **AQSOFT**: web solutions, custom software, e-commerce, mobile apps, cloud and AI.
 
-A fast, dependency-free static site (HTML + CSS + JS) with a Three.js 3D hero, 3D tilt cards,
-scroll animations and a fully responsive layout.
+A fast, dependency-free static site (HTML + CSS + JS): black cinematic theme, WebGL particle "AI core" hero,
+scroll-driven storytelling (AQ POS walkthrough, horizontal solutions, platform layers) and a fully responsive layout.
 
 ## Project structure
 
@@ -69,7 +69,7 @@ The `CNAME` file is only used by GitHub Pages and can be ignored there.
 
 ## Before going live: things to update
 
-- **Email**: the site uses `info@aqsoft.tech`. Create that mailbox (or change it in `index.html` and `assets/js/main.js`).
+- **Email**: the site uses `abdullah@aqsoft.tech`. Create that mailbox (or change it in `index.html` and `assets/js/main.js`).
 - **Contact form**: currently opens the visitor's email app. For direct form submissions, connect a service like Formspree and point the form at it.
 - **Work section**: shows example project types. Replace with real case studies when ready.
 - **Brand colors**: edit the variables at the top of `assets/css/style.css`.

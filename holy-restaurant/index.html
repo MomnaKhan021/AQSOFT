@@ -7,7 +7,7 @@
 <meta name="description" content="Holy Restaurant — a Haitian family restaurant at 400 Rahway Ave, Elizabeth, NJ. Dine-in, curbside pickup and delivery. Rated 4.8 by 46 guests.">
 <meta name="theme-color" content="#071338">
 <meta property="og:title" content="Holy Restaurant · Elizabeth, NJ">
-<meta property="og:description" content="A family table on Rahway Ave. Dine-in, curbside pickup and delivery. Open until 10 PM.">
+<meta property="og:description" content="Haitian home cooking on Rahway Ave. Dine-in, curbside pickup and delivery. Open daily from 8 AM.">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='30' fill='%23071338' stroke='%23ffc93c' stroke-width='3'/%3E%3Cpath d='M32 14c6 8 10 13 10 20a10 10 0 0 1-20 0c0-7 4-12 10-20z' fill='%23ffc93c'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -21,6 +21,7 @@
   "telephone": "+1-908-536-4912",
   "priceRange": "$20–30",
   "servesCuisine": "Haitian",
+  "openingHours": ["Mo-Tu 08:00-21:00", "We 08:00-20:00", "Th-Sa 08:00-22:00", "Su 08:00-20:00"],
   "address": {
     "@type": "PostalAddress",
     "streetAddress": "400 Rahway Ave",
@@ -279,6 +280,9 @@ section{position:relative}
 .status i{width:8px;height:8px;border-radius:50%;background:#6fcf7f;box-shadow:0 0 0 0 rgba(111,207,127,.6);animation:ping 1.8s infinite}
 .status.closed i{background:#d76a5a;box-shadow:0 0 0 0 rgba(215,106,90,.6)}
 @keyframes ping{70%{box-shadow:0 0 0 10px rgba(0,0,0,0)}100%{box-shadow:0 0 0 0 rgba(0,0,0,0)}}
+.week{list-style:none;margin-top:18px;max-width:340px;font-size:.92rem;color:var(--ink-dim)}
+.week li{display:flex;justify-content:space-between;gap:16px;padding:7px 0;border-bottom:1px dashed rgba(255,201,60,.14)}
+.week li.today{color:var(--gold);font-weight:600}
 .chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
 .chip{display:inline-flex;align-items:center;gap:8px;padding:8px 14px;border:1px solid var(--line);border-radius:999px;font-size:.82rem;color:var(--ink-dim)}
 .chip::before{content:"✓";color:var(--gold)}
@@ -395,8 +399,8 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
   <!-- Marquee -->
   <div class="marquee" aria-hidden="true">
     <div class="marquee-track">
-      <span>Byenvini</span><span>Dine-in</span><span>Bon apeti</span><span>Curbside pickup</span><span>Manje lakay</span><span>Delivery</span><span>Manje Ayisyen</span><span>Mèsi anpil</span><span>Open until 10 PM</span>
-      <span>Byenvini</span><span>Dine-in</span><span>Bon apeti</span><span>Curbside pickup</span><span>Manje lakay</span><span>Delivery</span><span>Manje Ayisyen</span><span>Mèsi anpil</span><span>Open until 10 PM</span>
+      <span>Byenvini</span><span>Dine-in</span><span>Bon apeti</span><span>Curbside pickup</span><span>Manje lakay</span><span>Delivery</span><span>Manje Ayisyen</span><span>Mèsi anpil</span><span>Open daily from 8 AM</span>
+      <span>Byenvini</span><span>Dine-in</span><span>Bon apeti</span><span>Curbside pickup</span><span>Manje lakay</span><span>Delivery</span><span>Manje Ayisyen</span><span>Mèsi anpil</span><span>Open daily from 8 AM</span>
     </div>
   </div>
 
@@ -518,8 +522,9 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
           </div>
           <div class="info-block">
             <span class="eyebrow">Hours</span>
-            <div class="val" id="hoursLine">Closes 10 PM</div>
+            <div class="val" id="hoursLine">8 AM – 10 PM</div>
             <div class="status" id="status"><i></i><span>Checking…</span></div>
+            <ul class="week" id="week"></ul>
           </div>
           <div class="info-block">
             <span class="eyebrow">Phone</span>
@@ -576,8 +581,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
    Current photos are cropped from the restaurant's own printed menu.
    A dish without a photo shows its initial on a warm tile instead.
    Dishes and prices are from the restaurant's printed menu.
-   Hours: 24h clock, New York time. Only "closes 10 PM" is confirmed;
-   set the real opening times per day (0 = Sunday … 6 = Saturday).
+   Hours: 24h clock, New York time (0 = Sunday … 6 = Saturday).
    ===================================================================== */
 const RICE = "With rice and beans, white rice with bean sauce, or black rice.";
 const sl = (sm, lg) => `Sm $${sm} · Lg $${lg}`;
@@ -637,7 +641,7 @@ const MENU = [
     { name: "Grill Bread", desc: "", price: "$1.75" },
   ]},
 ];
-const HOURS = { 0:[11,22], 1:[11,22], 2:[11,22], 3:[11,22], 4:[11,22], 5:[11,22], 6:[11,22] };
+const HOURS = { 0:[8,20], 1:[8,21], 2:[8,21], 3:[8,20], 4:[8,22], 5:[8,22], 6:[8,22] };
 
 /* ===================================================================== */
 (() => {
@@ -894,7 +898,10 @@ const HOURS = { 0:[11,22], 1:[11,22], 2:[11,22], 3:[11,22], 4:[11,22], 5:[11,22]
       const next = now < o ? `today at ${fmt(o)}` : `tomorrow at ${fmt(HOURS[(day + 1) % 7][0])}`;
       el.lastElementChild.textContent = `Closed · opens ${next}`;
     }
-    $("#hoursLine").textContent = `${fmt(o)} – ${fmt(cl)}`;
+    $("#hoursLine").textContent = `Today ${fmt(o)} – ${fmt(cl)}`;
+    // full week, starting Monday, today highlighted
+    $("#week").innerHTML = [1, 2, 3, 4, 5, 6, 0].map(d =>
+      `<li${d === day ? ' class="today"' : ""}><span>${["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"][d]}</span><span>${fmt(HOURS[d][0])} – ${fmt(HOURS[d][1])}</span></li>`).join("");
   };
   updateStatus(); setInterval(updateStatus, 60000);
 

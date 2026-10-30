@@ -137,14 +137,14 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 @media (max-width:900px){.nav-links,.nav-cta{display:none}.burger{display:block}.nav .wrap{height:80px}.brand{font-size:1.6rem}.nav::after{height:5px;bottom:-5px}.flag{width:50px;height:34px}.flag i{width:34px;height:23px}}
 
 /* ============ Hero ============ */
-.hero{position:relative;height:100vh;height:100svh;min-height:620px;overflow:hidden;display:flex;align-items:center}
+.hero{position:relative;height:100vh;height:100svh;min-height:620px;overflow:hidden;display:flex;align-items:center;padding:120px 0 60px}
 #embers{position:absolute;inset:0;width:100%;height:100%}
 .hero-glow{position:absolute;left:50%;bottom:-30vh;width:120vw;height:80vh;transform:translateX(-50%);background:radial-gradient(ellipse at 30% 50%, rgba(210,16,52,.45), transparent 55%),radial-gradient(ellipse at 70% 50%, rgba(29,63,209,.55), transparent 55%);filter:blur(10px);animation:breathe 6s ease-in-out infinite}
 @keyframes breathe{0%,100%{opacity:.8}50%{opacity:1}}
 .hero-content{position:relative;z-index:2;width:100%}
-.hero .eyebrow{display:flex;align-items:center;gap:14px;margin-bottom:28px}
+.hero .eyebrow{display:flex;align-items:center;gap:14px;margin-bottom:min(28px,3vh)}
 .hero .eyebrow::before{content:"";width:44px;height:1px;background:var(--gold)}
-.hero-title{font-family:var(--serif);font-weight:400;font-size:clamp(4rem,15vw,13rem);line-height:.86;letter-spacing:-.01em}
+.hero-title{font-family:var(--serif);font-weight:400;font-size:clamp(3.4rem,min(15vw,19vh),13rem);line-height:.86;letter-spacing:-.01em}
 .hero-title .line{display:block;overflow:hidden;padding-bottom:.16em;margin-bottom:-.1em}
 .hero-title .line span{display:inline-block;transform:translateY(105%)}
 .hero-title em{font-style:italic;background:linear-gradient(90deg,var(--gold),var(--pink) 45%,var(--ember) 70%,var(--gold));background-size:200% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:shine 8s linear infinite}
@@ -152,7 +152,7 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 .hero-title{font-weight:600}
 .ready .hero-title .line span{animation:rise 1.4s var(--ease) forwards}
 .ready .hero-title .line:nth-child(2) span{animation-delay:.12s}
-.hero-sub{max-width:460px;margin-top:34px;color:var(--ink-dim);font-size:1.05rem;opacity:0;transform:translateY(20px);transition:opacity 1s .6s,transform 1s .6s var(--ease)}
+.hero-sub{max-width:460px;margin-top:min(34px,3.5vh);color:var(--ink-dim);font-size:1.05rem;opacity:0;transform:translateY(20px);transition:opacity 1s .6s,transform 1s .6s var(--ease)}
 .hero-actions{display:flex;flex-wrap:wrap;gap:14px;margin-top:38px;opacity:0;transform:translateY(20px);transition:opacity 1s .8s,transform 1s .8s var(--ease)}
 .ready .hero-sub,.ready .hero-actions{opacity:1;transform:none}
 .btn{position:relative;display:inline-flex;align-items:center;gap:12px;padding:16px 28px;border-radius:999px;font-size:.8rem;letter-spacing:.16em;text-transform:uppercase;overflow:hidden;isolation:isolate;transition:color .4s}

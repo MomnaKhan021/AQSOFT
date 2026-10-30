@@ -208,12 +208,20 @@ section{position:relative}
 @keyframes steam{0%{stroke-dashoffset:260;opacity:0}20%{opacity:1}100%{stroke-dashoffset:0;opacity:0}}
 .plate-label{position:absolute;left:50%;bottom:-8px;transform:translateX(-50%);white-space:nowrap;font-size:.7rem;letter-spacing:.3em;text-transform:uppercase;color:var(--ink-mute)}
 .dish-list{list-style:none}
-.dish{display:grid;grid-template-columns:1fr auto;gap:6px 20px;padding:24px 0;border-bottom:1px solid var(--line);cursor:default;transition:padding .45s var(--ease)}
-.dish:hover{padding-left:14px}
+.dish{display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:4px 20px;padding:20px 0;border-bottom:1px solid var(--line);cursor:pointer;transition:padding .45s var(--ease)}
+.dish:hover,.dish.active{padding-left:14px}
 .dish h3{font-family:var(--serif);font-weight:500;font-size:1.65rem;line-height:1.2;transition:color .3s}
-.dish:hover h3{color:var(--gold-2)}
-.dish .price{font-family:var(--serif);font-size:1.4rem;color:var(--gold)}
-.dish p{grid-column:1/-1;color:var(--ink-dim);font-size:.92rem}
+.dish:hover h3,.dish.active h3{color:var(--gold-2)}
+.dish .price{font-family:var(--serif);font-size:1.4rem;color:var(--gold);align-self:start;margin-top:4px}
+.dish p{grid-column:2/-1;color:var(--ink-dim);font-size:.92rem}
+.thumb{grid-row:1/3;width:84px;height:84px;border-radius:16px;overflow:hidden;position:relative;border:1px solid var(--line);background:radial-gradient(circle at 35% 30%,var(--c,#c9793a),var(--wine) 75%);display:grid;place-items:center;font-family:var(--serif);font-size:2rem;color:rgba(244,234,217,.85)}
+.thumb img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .7s var(--ease)}
+.dish:hover .thumb img{transform:scale(1.1)}
+/* big photo of the selected dish, laid over the drawn plate */
+.plate-photo{position:absolute;inset:4%;border-radius:50%;overflow:hidden;opacity:0;transform:scale(.92);transition:opacity .6s,transform .9s var(--ease);box-shadow:0 30px 80px rgba(0,0,0,.6),0 0 0 1px rgba(227,168,87,.35),0 0 0 10px rgba(227,168,87,.06)}
+.plate-photo.on{opacity:1;transform:none}
+.plate-photo img{width:100%;height:100%;object-fit:cover}
+@media (max-width:520px){.thumb{grid-row:auto;width:64px;height:64px;border-radius:12px}.dish h3{font-size:1.35rem}.dish p{grid-column:1/-1}}
 .dish-anim{animation:dishIn .7s var(--ease) both}
 @keyframes dishIn{from{opacity:0;transform:translateX(30px)}to{opacity:1;transform:none}}
 .menu-note{margin-top:28px;font-size:.82rem;color:var(--ink-mute)}
@@ -414,6 +422,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
             <path d="M70 100 C 60 80, 80 70, 70 50 S 80 20, 70 0"/>
           </svg>
           <div class="plate" id="plate"></div>
+          <div class="plate-photo" id="platePhoto"><img alt=""></div>
           <div class="plate-label" id="plateLabel"></div>
         </div>
         <div>
@@ -542,6 +551,10 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
 /* =====================================================================
    EDIT HERE — menu and opening hours.
    The dishes below are sample content: replace them with the real menu.
+   Photos: put one per dish in holy-restaurant/img/, named after the dish
+   in lowercase with dashes, e.g. "Crispy Empanadas" -> img/crispy-empanadas.jpg
+   (square-ish JPG, ~800px). Or set img: "path/or/url.jpg" on a dish.
+   A dish without a photo shows its initial on a warm tile instead.
    Hours: 24h clock, New York time. Only "closes 10 PM" is confirmed;
    set the real opening times per day (0 = Sunday … 6 = Saturday).
    ===================================================================== */
@@ -740,15 +753,37 @@ const HOURS = { 0:[11,22], 1:[11,22], 2:[11,22], 3:[11,22], 4:[11,22], 5:[11,22]
       <circle cx="150" cy="150" r="16" fill="${color}"/>
     </svg>`;
   };
+  const photoBox = $("#platePhoto"), photoImg = $("img", photoBox);
+  const imgOf = d => d.img || `img/${d.name.toLowerCase().replace(/&/g, "and").replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "")}.jpg`;
+  // show the dish's photo big on the stage; fall back to the drawn plate when it has none
+  const feature = (d, el) => {
+    $$(".dish", list).forEach(x => x.classList.toggle("active", x === el));
+    plateLabel.textContent = d.name;
+    const src = el.querySelector(".thumb img") ? imgOf(d) : "";
+    if (!src) { photoBox.classList.remove("on"); return; }
+    if (photoImg.getAttribute("src") === src) { photoBox.classList.add("on"); return; }
+    photoBox.classList.remove("on");
+    setTimeout(() => { photoImg.alt = d.name; photoImg.src = src; }, reduce ? 0 : 250);
+  };
+  photoImg.addEventListener("load", () => photoBox.classList.add("on"));
+  photoImg.addEventListener("error", () => { photoBox.classList.remove("on"); photoImg.removeAttribute("src"); });
   const show = i => {
     const c = MENU[i];
     $$(".tab", tabs).forEach((t, j) => { t.classList.toggle("active", j === i); t.setAttribute("aria-selected", j === i); });
     list.innerHTML = c.dishes.map((d, j) =>
-      `<li class="dish dish-anim" style="animation-delay:${j * 70}ms"><h3>${d.name}</h3><span class="price">$${d.price}</span><p>${d.desc}</p></li>`).join("");
+      `<li class="dish dish-anim" tabindex="0" style="animation-delay:${j * 70}ms">
+        <div class="thumb" style="--c:${c.color}">${d.name[0]}<img src="${imgOf(d)}" alt="${d.name}" loading="lazy"></div>
+        <h3>${d.name}</h3><span class="price">$${d.price}</span><p>${d.desc}</p></li>`).join("");
+    const items = $$(".dish", list);
+    items.forEach((el, j) => {
+      const img = $(".thumb img", el);
+      img.addEventListener("error", () => { img.remove(); if (el.classList.contains("active")) feature(c.dishes[j], el); });
+      ["pointerenter", "focus", "click"].forEach(ev => el.addEventListener(ev, () => feature(c.dishes[j], el)));
+    });
     rot += 120;
     plate.style.transform = `rotate(${rot}deg) scale(.9)`;
     setTimeout(() => { plate.innerHTML = plateSVG(c.color, i * 1.3); plate.style.transform = `rotate(${rot}deg) scale(1)`; }, reduce ? 0 : 350);
-    plateLabel.textContent = c.cat;
+    feature(c.dishes[0], items[0]);
   };
   tabs.innerHTML = MENU.map((c, i) => `<button class="tab" role="tab" aria-selected="false">${c.cat}</button>`).join("");
   $$(".tab", tabs).forEach((t, i) => t.addEventListener("click", () => show(i)));

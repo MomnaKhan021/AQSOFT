@@ -42,11 +42,11 @@ Front-end website for **Holy Restaurant**, a Haitian family restaurant.
 ## Design
 
 - **Style:** Haitian.
-- **Colors:** "Kanaval Red" theme:
-  - red background `#a50d27`
-  - sun yellow accents `#ffd640`
-  - flag blue `#00209f`, used for the reviews band and the bar
-  - small touches of turquoise, orange and light blue
+- **Colors:** flag blue `#00209f` and red `#d21034`, plus bright tap-tap colors:
+  - sun yellow `#ffc93c`
+  - turquoise `#19b8a6`
+  - pink `#ef4f86`
+  - green `#5cc04a`
 - **Fonts:** Fraunces (headings) and Manrope (text).
 - **Flag:** the bar uses the civil flag (blue over red, no coat of arms).
 

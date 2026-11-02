@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Holy Restaurant · Elizabeth, NJ</title>
 <meta name="description" content="Holy Restaurant — a Haitian family restaurant at 400 Rahway Ave, Elizabeth, NJ. Dine-in, curbside pickup and delivery. Rated 4.8 by 46 guests.">
-<meta name="theme-color" content="#071338">
+<meta name="theme-color" content="#a50d27">
 <meta property="og:title" content="Holy Restaurant · Elizabeth, NJ">
 <meta property="og:description" content="Haitian home cooking on Rahway Ave. Dine-in, curbside pickup and delivery. Open daily from 8 AM.">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='30' fill='%23071338' stroke='%23ffc93c' stroke-width='3'/%3E%3Cpath d='M32 14c6 8 10 13 10 20a10 10 0 0 1-20 0c0-7 4-12 10-20z' fill='%23ffc93c'/%3E%3C/svg%3E">
@@ -37,16 +37,17 @@
 <style>
 /* ============ Tokens ============ */
 :root{
-  /* Haitian palette: flag blue + red, with tap-tap bus brights */
-  --bg:#071338;
-  --bg-2:#0b1b4d;
-  --panel:#10235e;
-  --line:rgba(255,201,60,.22);
-  --ink:#fff8ec;
-  --ink-dim:#c7cdea;
-  --ink-mute:#8a93bf;
-  --gold:#ffc93c;
-  --gold-2:#ffd86b;
+  /* Kanaval red: flag red base with sun yellow and flag blue */
+  --bg:#a50d27;
+  --bg-2:#870a20;
+  --panel:#bb1834;
+  --line:rgba(255,214,64,.35);
+  --ink:#ffffff;
+  --ink-dim:#ffe2e2;
+  --ink-mute:#ffb8b8;
+  --gold:#ffd640;
+  --gold-2:#ffe27a;
+  --sky:#8fb8ff;
   --ember:#d21034;
   --wine:#8a0f2a;
   --blue:#1d3fd1;
@@ -101,14 +102,14 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 
 /* ============ Nav ============ */
 .nav{position:fixed;top:0;left:0;right:0;z-index:100;transition:background .4s,backdrop-filter .4s,border-color .4s;border-bottom:1px solid transparent}
-.nav.scrolled{background:linear-gradient(90deg,rgba(0,32,159,.92),rgba(7,19,56,.9) 35%,rgba(7,19,56,.9) 65%,rgba(150,10,40,.88));backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-color:var(--line)}
+.nav.scrolled{background:linear-gradient(90deg,rgba(0,32,159,.95),rgba(120,8,28,.94) 40%,rgba(120,8,28,.94));backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-color:var(--line)}
 /* Haitian flag ribbon along the bottom of the bar: blue over red */
-.nav::after{content:"";position:absolute;left:0;right:0;bottom:-6px;height:6px;background:linear-gradient(#00209f 50%,#d21034 50%);box-shadow:0 4px 18px rgba(210,16,52,.35);transform-origin:left;animation:ribbon 1.2s var(--ease) .6s both}
+.nav::after{content:"";position:absolute;left:0;right:0;bottom:-6px;height:6px;background:linear-gradient(#00209f 50%,#d21034 50%);box-shadow:0 2px 0 #5a0614,0 6px 18px rgba(0,0,0,.3);transform-origin:left;animation:ribbon 1.2s var(--ease) .6s both}
 @keyframes ribbon{from{transform:scaleX(0)}to{transform:scaleX(1)}}
 /* small waving flag beside the logo */
 .flag{position:relative;display:inline-block;width:58px;height:40px;margin-left:8px;padding-left:4px;border-left:1px solid var(--line)}
 .flag::before{content:"";position:absolute;left:14px;top:-2px;bottom:-4px;width:2.5px;border-radius:2px;background:linear-gradient(var(--gold),#b8892a)}
-.flag i{position:absolute;left:16px;top:0;width:40px;height:27px;border-radius:1px 3px 3px 1px;background:linear-gradient(#00209f 50%,#d21034 50%);transform-origin:left center;animation:flagwave 2.6s ease-in-out infinite;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,.35)}
+.flag i{position:absolute;left:16px;top:0;width:40px;height:27px;border-radius:1px 3px 3px 1px;background:linear-gradient(#00209f 50%,#d21034 50%);transform-origin:left center;animation:flagwave 2.6s ease-in-out infinite;overflow:hidden;box-shadow:0 0 0 1.5px rgba(255,255,255,.75),0 2px 8px rgba(0,0,0,.35)}
 .flag i::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(255,255,255,0) 0%,rgba(255,255,255,.22) 18%,rgba(0,0,0,.18) 36%,rgba(255,255,255,.2) 54%,rgba(0,0,0,.16) 72%,rgba(255,255,255,0) 90%);background-size:200% 100%;animation:flagshade 2.6s linear infinite}
 @keyframes flagwave{0%,100%{transform:perspective(60px) rotateY(0) skewY(0)}25%{transform:perspective(60px) rotateY(-14deg) skewY(-3deg)}50%{transform:perspective(60px) rotateY(4deg) skewY(2deg)}75%{transform:perspective(60px) rotateY(-8deg) skewY(-1deg)}}
 @keyframes flagshade{to{background-position:-200% 0}}
@@ -139,7 +140,7 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 /* ============ Hero ============ */
 .hero{position:relative;height:100vh;height:100svh;min-height:620px;overflow:hidden;display:flex;align-items:center;padding:120px 0 60px}
 #embers{position:absolute;inset:0;width:100%;height:100%}
-.hero-glow{position:absolute;left:50%;bottom:-30vh;width:120vw;height:80vh;transform:translateX(-50%);background:radial-gradient(ellipse at 30% 50%, rgba(210,16,52,.45), transparent 55%),radial-gradient(ellipse at 70% 50%, rgba(29,63,209,.55), transparent 55%);filter:blur(10px);animation:breathe 6s ease-in-out infinite}
+.hero-glow{position:absolute;left:50%;bottom:-30vh;width:120vw;height:80vh;transform:translateX(-50%);background:radial-gradient(ellipse at 30% 50%, rgba(255,214,64,.35), transparent 55%),radial-gradient(ellipse at 75% 50%, rgba(0,32,159,.65), transparent 55%);filter:blur(10px);animation:breathe 6s ease-in-out infinite}
 @keyframes breathe{0%,100%{opacity:.8}50%{opacity:1}}
 .hero-content{position:relative;z-index:2;width:100%}
 .hero .eyebrow{display:flex;align-items:center;gap:14px;margin-bottom:min(28px,3vh)}
@@ -147,7 +148,7 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 .hero-title{font-family:var(--serif);font-weight:400;font-size:clamp(3.4rem,min(15vw,19vh),13rem);line-height:.86;letter-spacing:-.01em}
 .hero-title .line{display:block;overflow:hidden;padding-bottom:.16em;margin-bottom:-.1em}
 .hero-title .line span{display:inline-block;transform:translateY(105%)}
-.hero-title em{font-style:italic;background:linear-gradient(90deg,var(--gold),var(--pink) 45%,var(--ember) 70%,var(--gold));background-size:200% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:shine 8s linear infinite}
+.hero-title em{font-style:italic;background:linear-gradient(90deg,var(--gold),#fff6cf 35%,#ffb02e 65%,var(--gold));background-size:200% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:shine 8s linear infinite}
 @keyframes shine{to{background-position:200% 0}}
 .hero-title{font-weight:600}
 .ready .hero-title .line span{animation:rise 1.4s var(--ease) forwards}
@@ -181,7 +182,7 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 .marquee::before{top:0}.marquee::after{bottom:0;transform:scaleX(-1)}
 .marquee-track{display:flex;width:max-content;animation:marquee 32s linear infinite}
 .marquee span{font-family:var(--serif);font-style:italic;font-size:clamp(1.6rem,4vw,2.8rem);white-space:nowrap;padding:0 34px;display:flex;align-items:center;gap:68px}
-.marquee span::after{content:"✦";font-style:normal;font-size:1rem;color:var(--ember)}
+.marquee span::after{content:"✦";font-style:normal;font-size:1rem;color:var(--blue)}
 @keyframes marquee{to{transform:translateX(-50%)}}
 
 /* ============ Reveal helpers ============ */
@@ -221,7 +222,7 @@ section{position:relative}
 .dish:hover h3,.dish.active h3{color:var(--gold-2)}
 .dish .price{font-family:var(--serif);font-size:1.4rem;color:var(--gold);align-self:start;margin-top:4px}
 .dish p{grid-column:2/-1;color:var(--ink-dim);font-size:.92rem}
-.thumb{grid-row:1/3;width:84px;height:84px;border-radius:16px;overflow:hidden;position:relative;border:1px solid var(--line);background:radial-gradient(circle at 35% 30%,var(--c,#ffc93c),var(--blue) 80%);display:grid;place-items:center;font-family:var(--serif);font-size:2rem;color:rgba(244,234,217,.85)}
+.thumb{grid-row:1/3;width:84px;height:84px;border-radius:16px;overflow:hidden;position:relative;border:1px solid var(--line);background:radial-gradient(circle at 35% 30%,var(--c,#ffd640),#00209f 80%);display:grid;place-items:center;font-family:var(--serif);font-size:2rem;color:rgba(244,234,217,.85)}
 .thumb img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .7s var(--ease)}
 .dish:hover .thumb img{transform:scale(1.1)}
 /* big photo of the selected dish, laid over the drawn plate */
@@ -237,7 +238,7 @@ section{position:relative}
 /* ============ Ways to dine (tilt cards) ============ */
 .ways{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;perspective:1200px}
 .way{position:relative;padding:44px 34px 38px;min-height:380px;border:1px solid var(--line);border-radius:22px;background:linear-gradient(160deg,var(--panel),var(--bg) 70%);overflow:hidden;transform-style:preserve-3d;transition:transform .5s var(--ease),border-color .4s;display:flex;flex-direction:column}
-.way{--acc:var(--ember)}.way:nth-child(2){--acc:var(--teal)}.way:nth-child(3){--acc:var(--pink)}
+.way{--acc:var(--gold)}.way:nth-child(2){--acc:#5fe3d2}.way:nth-child(3){--acc:var(--sky)}
 .way::after{content:"";position:absolute;left:0;right:0;top:0;height:5px;background:var(--acc)}
 .way:hover{border-color:var(--acc)}
 .way::before{content:"";position:absolute;inset:0;background:radial-gradient(400px circle at var(--mx,50%) var(--my,0%), color-mix(in srgb,var(--acc) 22%,transparent), transparent 45%);opacity:0;transition:opacity .4s}
@@ -250,7 +251,7 @@ section{position:relative}
 @media (max-width:900px){.ways{grid-template-columns:1fr}.way{min-height:300px}}
 
 /* ============ Reviews band ============ */
-.praise{text-align:center;padding:clamp(100px,14vw,170px) 0;overflow:hidden;background:linear-gradient(180deg,var(--blue),#0e2a9a 45%,var(--ember))}
+.praise{text-align:center;padding:clamp(100px,14vw,170px) 0;overflow:hidden;background:linear-gradient(180deg,#0b2fd6,#00209f 60%,#00177a)}
 .praise .score{font-family:var(--serif);font-size:clamp(7rem,26vw,20rem);line-height:.8;font-weight:800;background:linear-gradient(180deg,#fff,var(--gold));-webkit-background-clip:text;background-clip:text;color:transparent}
 .praise .stars svg{width:24px;height:24px}
 .praise h2{font-family:var(--serif);font-weight:400;font-size:clamp(1.6rem,3.6vw,2.6rem);margin:26px auto 0;max-width:720px;line-height:1.25}
@@ -277,7 +278,7 @@ section{position:relative}
 .chip{display:inline-flex;align-items:center;gap:8px;padding:8px 14px;border:1px solid var(--line);border-radius:999px;font-size:.82rem;color:var(--ink-dim)}
 .chip::before{content:"✓";color:var(--gold)}
 .map{position:relative;min-height:440px;border-radius:22px;overflow:hidden;border:1px solid var(--line);background:var(--panel)}
-.map iframe{position:absolute;inset:0;width:100%;height:100%;border:0;filter:grayscale(1) invert(.9) sepia(.4) hue-rotate(185deg) saturate(1.8) contrast(.9) brightness(.85)}
+.map iframe{position:absolute;inset:0;width:100%;height:100%;border:0;filter:grayscale(1) invert(.9) sepia(.4) hue-rotate(-25deg) saturate(2.2) contrast(.9) brightness(.85)}
 .map-pin{position:absolute;left:16px;bottom:16px;right:16px;display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;padding:16px 18px;border-radius:16px;background:rgba(11,8,6,.82);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border:1px solid var(--line)}
 .map-pin strong{font-family:var(--serif);font-size:1.3rem;font-weight:500}
 .map-pin span{display:block;font-size:.8rem;color:var(--ink-dim)}
@@ -294,7 +295,7 @@ footer{border-top:1px solid var(--line);padding:34px 0 40px;color:var(--ink-mute
 footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
 
 /* mobile action bar */
-.action-bar{position:fixed;left:12px;right:12px;bottom:calc(12px + env(safe-area-inset-bottom));z-index:98;display:none;grid-template-columns:1fr 1fr;gap:8px;padding:8px;border-radius:999px;background:rgba(18,13,10,.88);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border:1px solid var(--line);transform:translateY(140%);transition:transform .6s var(--ease)}
+.action-bar{position:fixed;left:12px;right:12px;bottom:calc(12px + env(safe-area-inset-bottom));z-index:98;display:none;grid-template-columns:1fr 1fr;gap:8px;padding:8px;border-radius:999px;background:rgba(110,6,24,.92);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border:1px solid var(--line);transform:translateY(140%);transition:transform .6s var(--ease)}
 .action-bar.show{transform:none}
 .action-bar a{display:flex;align-items:center;justify-content:center;gap:8px;padding:13px;border-radius:999px;font-size:.74rem;letter-spacing:.16em;text-transform:uppercase}
 .action-bar a:first-child{background:var(--gold);color:var(--bg);font-weight:600}
@@ -324,7 +325,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
   <div class="loader-inner">
     <svg class="loader-flame" viewBox="0 0 34 52"><path d="M17 0C25 11 34 20 34 33a17 17 0 0 1-34 0C0 20 9 11 17 0z"/></svg>
     <div class="loader-word">
-      <span style="animation-delay:.05s;color:var(--gold)">H</span><span style="animation-delay:.12s;color:var(--pink)">O</span><span style="animation-delay:.19s;color:var(--teal)">L</span><span style="animation-delay:.26s;color:var(--ember)">Y</span>
+      <span style="animation-delay:.05s;color:var(--gold)">H</span><span style="animation-delay:.12s;color:#fff">O</span><span style="animation-delay:.19s;color:var(--teal)">L</span><span style="animation-delay:.26s;color:var(--sky)">Y</span>
     </div>
     <div class="loader-bar"><i></i></div>
   </div>
@@ -554,7 +555,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
 const RICE = "With rice and beans, white rice with bean sauce, or black rice.";
 const sl = (sm, lg) => `Sm $${sm} · Lg $${lg}`;
 const MENU = [
-  { cat: "Haitian Plates", color: "#d21034", dishes: [
+  { cat: "Haitian Plates", color: "#ffd640", dishes: [
     { name: "Bouillon / Stew", desc: "Goat, beef, plantain, spinach, carrots, watercress and yellow yam.", price: sl("17.99", "27.99") },
     { name: "Squash Soup / Joumou", desc: "Haiti's beloved pumpkin soup.", price: "$18.99" },
     { name: "Okra / Calalou", desc: RICE, price: sl("18.99", "27.99"), img: "img/okra-calalou.jpg" },
@@ -565,14 +566,14 @@ const MENU = [
     { name: "Goat / Kabrit", desc: RICE, price: sl("21.99", "27.99") },
     { name: "Fried Fish / Salt Fish", desc: RICE, price: sl("39.99", "49.99"), img: "img/fried-fish-salt-fish.jpg" },
   ]},
-  { cat: "Fritay", color: "#ef4f86", dishes: [
+  { cat: "Fritay", color: "#ff9f1c", dishes: [
     { name: "Pork", desc: "Fried Haitian-style, fritay plate.", price: "$20.99", img: "img/fritay.jpg" },
     { name: "Goat", desc: "Fried Haitian-style, fritay plate.", price: "$24.99" },
     { name: "Turkey", desc: "Fried Haitian-style, fritay plate.", price: "$24.99" },
     { name: "Chicken", desc: "Fried Haitian-style, fritay plate.", price: "$18.99" },
     { name: "Fish", desc: "Fried Haitian-style, fritay plate.", price: "$40.00" },
   ]},
-  { cat: "Lunch", color: "#1d3fd1", dishes: [
+  { cat: "Lunch", color: "#8fb8ff", dishes: [
     { name: "Baked Salmon", desc: "Mashed potatoes and green beans.", price: "$21.99", img: "img/baked-salmon.jpg" },
     { name: "Seasoned NY Steak", desc: "Mashed potatoes and mixed vegetables.", price: "$24.99", img: "img/seasoned-ny-steak.jpg" },
     { name: "Pork Ribs", desc: "Rice with sweet plantain.", price: "$18.99", img: "img/pork-ribs.jpg" },
@@ -588,13 +589,13 @@ const MENU = [
     { name: "Caesar Salad with Salmon", desc: "", price: "$22.99", img: "img/caesar-salad.jpg" },
     { name: "Mozzarella Sticks", desc: "4 pieces.", price: "$4.99" },
   ]},
-  { cat: "Appetizers", color: "#ffc93c", dishes: [
+  { cat: "Appetizers", color: "#5fe3d2", dishes: [
     { name: "Chicktay with Bread", desc: "", price: "$4.99" },
     { name: "Chicktay Hareng or Janbon", desc: "Herring or ham.", price: "$4.99" },
     { name: "Patty", desc: "", price: "$10.99", img: "img/patty.jpg" },
     { name: "Garlic Bread", desc: "", price: "$2.99", img: "img/garlic-bread.jpg" },
   ]},
-  { cat: "Sides", color: "#19b8a6", dishes: [
+  { cat: "Sides", color: "#ffffff", dishes: [
     { name: "Plantains (5)", desc: "", price: "$5.99" },
     { name: "Akra (3 pieces)", desc: "", price: "$5.99" },
     { name: "Marinade (4 pieces)", desc: "", price: "$2.99" },

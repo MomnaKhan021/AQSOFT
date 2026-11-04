@@ -5,10 +5,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Holy Restaurant · Elizabeth, NJ</title>
 <meta name="description" content="Holy Restaurant — a Haitian family restaurant at 400 Rahway Ave, Elizabeth, NJ. Dine-in, curbside pickup and delivery. Rated 4.8 by 46 guests.">
-<meta name="theme-color" content="#05301b">
+<meta name="theme-color" content="#0c4a2e">
 <meta property="og:title" content="Holy Restaurant · Elizabeth, NJ">
 <meta property="og:description" content="Haitian home cooking on Rahway Ave. Dine-in, curbside pickup and delivery. Open daily from 8 AM.">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='30' fill='%2305301b' stroke='%23ffc93c' stroke-width='3'/%3E%3Cpath d='M32 14c6 8 10 13 10 20a10 10 0 0 1-20 0c0-7 4-12 10-20z' fill='%23ffc93c'/%3E%3C/svg%3E">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='30' fill='%230c4a2e' stroke='%23ffc93c' stroke-width='3'/%3E%3Cpath d='M32 14c6 8 10 13 10 20a10 10 0 0 1-20 0c0-7 4-12 10-20z' fill='%23ffc93c'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,800;1,9..144,400;1,9..144,600&family=Manrope:wght@300;400;500;600&display=swap" rel="stylesheet">
@@ -38,13 +38,13 @@
 /* ============ Tokens ============ */
 :root{
   /* Holy Restaurant green, matching their printed menu: deep green, lime, sun yellow, turquoise */
-  --bg:#05301b;
-  --bg-2:#073d23;
-  --panel:#0b4a2b;
+  --bg:#0c4a2e;
+  --bg-2:#0f5636;
+  --panel:#146541;
   --line:rgba(255,214,64,.26);
   --ink:#fbfff4;
   --ink-dim:#cfe9d4;
-  --ink-mute:#8dbd98;
+  --ink-mute:#9fcca9;
   --gold:#ffd640;
   --gold-2:#ffe27a;
   --lime:#7ee04f;
@@ -79,7 +79,7 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
   background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
   animation:grain 1.2s steps(6) infinite}
 @keyframes grain{0%{transform:translate(0,0)}20%{transform:translate(-4%,3%)}40%{transform:translate(3%,-5%)}60%{transform:translate(-2%,4%)}80%{transform:translate(5%,1%)}100%{transform:translate(0,0)}}
-.vignette{position:fixed;inset:0;z-index:89;pointer-events:none;background:radial-gradient(ellipse at center, transparent 55%, rgba(0,0,0,.55) 100%)}
+.vignette{position:fixed;inset:0;z-index:89;pointer-events:none;background:radial-gradient(ellipse at center, transparent 60%, rgba(0,0,0,.3) 100%)}
 
 /* ============ Preloader ============ */
 .loader{position:fixed;inset:0;z-index:200;display:grid;place-items:center;background:var(--bg);transition:clip-path 1.2s var(--ease)}
@@ -103,7 +103,7 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 
 /* ============ Nav ============ */
 .nav{position:fixed;top:0;left:0;right:0;z-index:100;transition:background .4s,backdrop-filter .4s,border-color .4s;border-bottom:1px solid transparent}
-.nav.scrolled{background:linear-gradient(90deg,rgba(4,38,21,.94),rgba(9,72,40,.92) 50%,rgba(4,38,21,.94));backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-color:var(--line)}
+.nav.scrolled{background:linear-gradient(90deg,rgba(9,64,39,.95),rgba(16,92,58,.93) 50%,rgba(9,64,39,.95));backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-color:var(--line)}
 /* Haitian flag ribbon along the bottom of the bar: blue over red */
 .nav::after{content:"";position:absolute;left:0;right:0;bottom:-6px;height:6px;background:linear-gradient(#00209f 50%,#d21034 50%);box-shadow:0 4px 18px rgba(210,16,52,.35);transform-origin:left;animation:ribbon 1.2s var(--ease) .6s both}
 @keyframes ribbon{from{transform:scaleX(0)}to{transform:scaleX(1)}}
@@ -296,7 +296,7 @@ footer{border-top:1px solid var(--line);padding:34px 0 40px;color:var(--ink-mute
 footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
 
 /* mobile action bar */
-.action-bar{position:fixed;left:12px;right:12px;bottom:calc(12px + env(safe-area-inset-bottom));z-index:98;display:none;grid-template-columns:1fr 1fr;gap:8px;padding:8px;border-radius:999px;background:rgba(5,44,25,.92);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border:1px solid var(--line);transform:translateY(140%);transition:transform .6s var(--ease)}
+.action-bar{position:fixed;left:12px;right:12px;bottom:calc(12px + env(safe-area-inset-bottom));z-index:98;display:none;grid-template-columns:1fr 1fr;gap:8px;padding:8px;border-radius:999px;background:rgba(10,70,43,.93);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border:1px solid var(--line);transform:translateY(140%);transition:transform .6s var(--ease)}
 .action-bar.show{transform:none}
 .action-bar a{display:flex;align-items:center;justify-content:center;gap:8px;padding:13px;border-radius:999px;font-size:.74rem;letter-spacing:.16em;text-transform:uppercase}
 .action-bar a:first-child{background:var(--gold);color:var(--bg);font-weight:600}
@@ -336,7 +336,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
 <header class="nav">
   <div class="wrap">
     <a href="#top" class="brand" aria-label="Holy Restaurant home">
-      <svg viewBox="0 0 22 32" aria-hidden="true"><path d="M11 0c5 7 11 12 11 20a11 11 0 0 1-22 0C0 12 6 7 11 0z" fill="#ffc93c"/><path d="M11 13c2.5 3.5 5 6 5 9.5a5 5 0 0 1-10 0c0-3.5 2.5-6 5-9.5z" fill="#05301b"/></svg>
+      <svg viewBox="0 0 22 32" aria-hidden="true"><path d="M11 0c5 7 11 12 11 20a11 11 0 0 1-22 0C0 12 6 7 11 0z" fill="#ffc93c"/><path d="M11 13c2.5 3.5 5 6 5 9.5a5 5 0 0 1-10 0c0-3.5 2.5-6 5-9.5z" fill="#0c4a2e"/></svg>
       <span>HOLY<small>RESTAURANT</small></span>
       <span class="flag" role="img" aria-label="Haitian flag" title="Ayiti"><i></i></span>
     </a>

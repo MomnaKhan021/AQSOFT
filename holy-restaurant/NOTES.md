@@ -43,7 +43,7 @@ Front-end website for **Holy Restaurant**, a Haitian family restaurant.
 
 - **Style:** Haitian.
 - **Colors:** green, to match the restaurant's own branding and printed menu:
-  - deep green background `#05301b`
+  - medium-dark green background `#0c4a2e`
   - lime `#7ee04f`
   - sun yellow `#ffd640`
   - turquoise `#2fd0d9`

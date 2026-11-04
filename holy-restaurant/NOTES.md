@@ -42,11 +42,12 @@ Front-end website for **Holy Restaurant**, a Haitian family restaurant.
 ## Design
 
 - **Style:** Haitian.
-- **Colors:** flag blue `#00209f` and red `#d21034`, plus bright tap-tap colors:
-  - sun yellow `#ffc93c`
-  - turquoise `#19b8a6`
-  - pink `#ef4f86`
-  - green `#5cc04a`
+- **Colors:** green, to match the restaurant's own branding and printed menu:
+  - deep green background `#05301b`
+  - lime `#7ee04f`
+  - sun yellow `#ffd640`
+  - turquoise `#2fd0d9`
+  - The flag in the top bar keeps Haiti's blue and red.
 - **Fonts:** Fraunces (headings) and Manrope (text).
 - **Flag:** the bar uses the civil flag (blue over red, no coat of arms).
 

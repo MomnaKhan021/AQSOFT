@@ -5,10 +5,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Holy Restaurant · Elizabeth, NJ</title>
 <meta name="description" content="Holy Restaurant — a Haitian family restaurant at 400 Rahway Ave, Elizabeth, NJ. Dine-in, curbside pickup and delivery. Rated 4.8 by 46 guests.">
-<meta name="theme-color" content="#071338">
+<meta name="theme-color" content="#05301b">
 <meta property="og:title" content="Holy Restaurant · Elizabeth, NJ">
 <meta property="og:description" content="Haitian home cooking on Rahway Ave. Dine-in, curbside pickup and delivery. Open daily from 8 AM.">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='30' fill='%23071338' stroke='%23ffc93c' stroke-width='3'/%3E%3Cpath d='M32 14c6 8 10 13 10 20a10 10 0 0 1-20 0c0-7 4-12 10-20z' fill='%23ffc93c'/%3E%3C/svg%3E">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='30' fill='%2305301b' stroke='%23ffc93c' stroke-width='3'/%3E%3Cpath d='M32 14c6 8 10 13 10 20a10 10 0 0 1-20 0c0-7 4-12 10-20z' fill='%23ffc93c'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,800;1,9..144,400;1,9..144,600&family=Manrope:wght@300;400;500;600&display=swap" rel="stylesheet">
@@ -37,23 +37,25 @@
 <style>
 /* ============ Tokens ============ */
 :root{
-  /* Haitian palette: flag blue + red, with tap-tap bus brights */
-  --bg:#071338;
-  --bg-2:#0b1b4d;
-  --panel:#10235e;
-  --line:rgba(255,201,60,.22);
-  --ink:#fff8ec;
-  --ink-dim:#c7cdea;
-  --ink-mute:#8a93bf;
-  --gold:#ffc93c;
-  --gold-2:#ffd86b;
+  /* Holy Restaurant green, matching their printed menu: deep green, lime, sun yellow, turquoise */
+  --bg:#05301b;
+  --bg-2:#073d23;
+  --panel:#0b4a2b;
+  --line:rgba(255,214,64,.26);
+  --ink:#fbfff4;
+  --ink-dim:#cfe9d4;
+  --ink-mute:#8dbd98;
+  --gold:#ffd640;
+  --gold-2:#ffe27a;
+  --lime:#7ee04f;
+  --turq:#2fd0d9;
   --ember:#d21034;
   --wine:#8a0f2a;
   --blue:#1d3fd1;
   --teal:#19b8a6;
   --pink:#ef4f86;
   --green:#5cc04a;
-  --taptap:repeating-linear-gradient(90deg,var(--ember) 0 48px,var(--gold) 48px 96px,var(--teal) 96px 144px,var(--pink) 144px 192px,var(--blue) 192px 240px,var(--green) 240px 288px);
+  --taptap:repeating-linear-gradient(90deg,var(--lime) 0 48px,var(--gold) 48px 96px,var(--turq) 96px 144px,#2a9d4b 144px 192px,#c58b3a 192px 240px);
   --serif:"Fraunces", Georgia, "Times New Roman", serif;
   --sans:"Manrope", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
   --ease:cubic-bezier(.2,.7,.1,1);
@@ -101,7 +103,7 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 
 /* ============ Nav ============ */
 .nav{position:fixed;top:0;left:0;right:0;z-index:100;transition:background .4s,backdrop-filter .4s,border-color .4s;border-bottom:1px solid transparent}
-.nav.scrolled{background:linear-gradient(90deg,rgba(0,32,159,.92),rgba(7,19,56,.9) 35%,rgba(7,19,56,.9) 65%,rgba(150,10,40,.88));backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-color:var(--line)}
+.nav.scrolled{background:linear-gradient(90deg,rgba(4,38,21,.94),rgba(9,72,40,.92) 50%,rgba(4,38,21,.94));backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-color:var(--line)}
 /* Haitian flag ribbon along the bottom of the bar: blue over red */
 .nav::after{content:"";position:absolute;left:0;right:0;bottom:-6px;height:6px;background:linear-gradient(#00209f 50%,#d21034 50%);box-shadow:0 4px 18px rgba(210,16,52,.35);transform-origin:left;animation:ribbon 1.2s var(--ease) .6s both}
 @keyframes ribbon{from{transform:scaleX(0)}to{transform:scaleX(1)}}
@@ -139,7 +141,7 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 /* ============ Hero ============ */
 .hero{position:relative;height:100vh;height:100svh;min-height:620px;overflow:hidden;display:flex;align-items:center;padding:120px 0 60px}
 #embers{position:absolute;inset:0;width:100%;height:100%}
-.hero-glow{position:absolute;left:50%;bottom:-30vh;width:120vw;height:80vh;transform:translateX(-50%);background:radial-gradient(ellipse at 30% 50%, rgba(210,16,52,.45), transparent 55%),radial-gradient(ellipse at 70% 50%, rgba(29,63,209,.55), transparent 55%);filter:blur(10px);animation:breathe 6s ease-in-out infinite}
+.hero-glow{position:absolute;left:50%;bottom:-30vh;width:120vw;height:80vh;transform:translateX(-50%);background:radial-gradient(ellipse at 30% 50%, rgba(126,224,79,.32), transparent 55%),radial-gradient(ellipse at 70% 50%, rgba(47,208,217,.3), transparent 55%);filter:blur(10px);animation:breathe 6s ease-in-out infinite}
 @keyframes breathe{0%,100%{opacity:.8}50%{opacity:1}}
 .hero-content{position:relative;z-index:2;width:100%}
 .hero .eyebrow{display:flex;align-items:center;gap:14px;margin-bottom:min(28px,3vh)}
@@ -147,7 +149,7 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 .hero-title{font-family:var(--serif);font-weight:400;font-size:clamp(3.4rem,min(15vw,19vh),13rem);line-height:.86;letter-spacing:-.01em}
 .hero-title .line{display:block;overflow:hidden;padding-bottom:.16em;margin-bottom:-.1em}
 .hero-title .line span{display:inline-block;transform:translateY(105%)}
-.hero-title em{font-style:italic;background:linear-gradient(90deg,var(--gold),var(--pink) 45%,var(--ember) 70%,var(--gold));background-size:200% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:shine 8s linear infinite}
+.hero-title em{font-style:italic;background:linear-gradient(90deg,var(--lime),var(--gold) 40%,var(--turq) 75%,var(--lime));background-size:200% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:shine 8s linear infinite}
 @keyframes shine{to{background-position:200% 0}}
 .hero-title{font-weight:600}
 .ready .hero-title .line span{animation:rise 1.4s var(--ease) forwards}
@@ -181,7 +183,7 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 .marquee::before{top:0}.marquee::after{bottom:0;transform:scaleX(-1)}
 .marquee-track{display:flex;width:max-content;animation:marquee 32s linear infinite}
 .marquee span{font-family:var(--serif);font-style:italic;font-size:clamp(1.6rem,4vw,2.8rem);white-space:nowrap;padding:0 34px;display:flex;align-items:center;gap:68px}
-.marquee span::after{content:"✦";font-style:normal;font-size:1rem;color:var(--ember)}
+.marquee span::after{content:"✦";font-style:normal;font-size:1rem;color:#1f8a3e}
 @keyframes marquee{to{transform:translateX(-50%)}}
 
 /* ============ Reveal helpers ============ */
@@ -221,7 +223,7 @@ section{position:relative}
 .dish:hover h3,.dish.active h3{color:var(--gold-2)}
 .dish .price{font-family:var(--serif);font-size:1.4rem;color:var(--gold);align-self:start;margin-top:4px}
 .dish p{grid-column:2/-1;color:var(--ink-dim);font-size:.92rem}
-.thumb{grid-row:1/3;width:84px;height:84px;border-radius:16px;overflow:hidden;position:relative;border:1px solid var(--line);background:radial-gradient(circle at 35% 30%,var(--c,#ffc93c),var(--blue) 80%);display:grid;place-items:center;font-family:var(--serif);font-size:2rem;color:rgba(244,234,217,.85)}
+.thumb{grid-row:1/3;width:84px;height:84px;border-radius:16px;overflow:hidden;position:relative;border:1px solid var(--line);background:radial-gradient(circle at 35% 30%,var(--c,#ffd640),#0a5a30 80%);display:grid;place-items:center;font-family:var(--serif);font-size:2rem;color:rgba(244,234,217,.85)}
 .thumb img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .7s var(--ease)}
 .dish:hover .thumb img{transform:scale(1.1)}
 /* big photo of the selected dish, laid over the drawn plate */
@@ -237,7 +239,7 @@ section{position:relative}
 /* ============ Ways to dine (tilt cards) ============ */
 .ways{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;perspective:1200px}
 .way{position:relative;padding:44px 34px 38px;min-height:380px;border:1px solid var(--line);border-radius:22px;background:linear-gradient(160deg,var(--panel),var(--bg) 70%);overflow:hidden;transform-style:preserve-3d;transition:transform .5s var(--ease),border-color .4s;display:flex;flex-direction:column}
-.way{--acc:var(--ember)}.way:nth-child(2){--acc:var(--teal)}.way:nth-child(3){--acc:var(--pink)}
+.way{--acc:var(--lime)}.way:nth-child(2){--acc:var(--gold)}.way:nth-child(3){--acc:var(--turq)}
 .way::after{content:"";position:absolute;left:0;right:0;top:0;height:5px;background:var(--acc)}
 .way:hover{border-color:var(--acc)}
 .way::before{content:"";position:absolute;inset:0;background:radial-gradient(400px circle at var(--mx,50%) var(--my,0%), color-mix(in srgb,var(--acc) 22%,transparent), transparent 45%);opacity:0;transition:opacity .4s}
@@ -250,7 +252,7 @@ section{position:relative}
 @media (max-width:900px){.ways{grid-template-columns:1fr}.way{min-height:300px}}
 
 /* ============ Reviews band ============ */
-.praise{text-align:center;padding:clamp(100px,14vw,170px) 0;overflow:hidden;background:linear-gradient(180deg,var(--blue),#0e2a9a 45%,var(--ember))}
+.praise{text-align:center;padding:clamp(100px,14vw,170px) 0;overflow:hidden;background:linear-gradient(180deg,#25a74f,#11743a 55%,#07502a)}
 .praise .score{font-family:var(--serif);font-size:clamp(7rem,26vw,20rem);line-height:.8;font-weight:800;background:linear-gradient(180deg,#fff,var(--gold));-webkit-background-clip:text;background-clip:text;color:transparent}
 .praise .stars svg{width:24px;height:24px}
 .praise h2{font-family:var(--serif);font-weight:400;font-size:clamp(1.6rem,3.6vw,2.6rem);margin:26px auto 0;max-width:720px;line-height:1.25}
@@ -277,7 +279,7 @@ section{position:relative}
 .chip{display:inline-flex;align-items:center;gap:8px;padding:8px 14px;border:1px solid var(--line);border-radius:999px;font-size:.82rem;color:var(--ink-dim)}
 .chip::before{content:"✓";color:var(--gold)}
 .map{position:relative;min-height:440px;border-radius:22px;overflow:hidden;border:1px solid var(--line);background:var(--panel)}
-.map iframe{position:absolute;inset:0;width:100%;height:100%;border:0;filter:grayscale(1) invert(.9) sepia(.4) hue-rotate(185deg) saturate(1.8) contrast(.9) brightness(.85)}
+.map iframe{position:absolute;inset:0;width:100%;height:100%;border:0;filter:grayscale(1) invert(.9) sepia(.4) hue-rotate(95deg) saturate(1.8) contrast(.9) brightness(.85)}
 .map-pin{position:absolute;left:16px;bottom:16px;right:16px;display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;padding:16px 18px;border-radius:16px;background:rgba(11,8,6,.82);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border:1px solid var(--line)}
 .map-pin strong{font-family:var(--serif);font-size:1.3rem;font-weight:500}
 .map-pin span{display:block;font-size:.8rem;color:var(--ink-dim)}
@@ -294,7 +296,7 @@ footer{border-top:1px solid var(--line);padding:34px 0 40px;color:var(--ink-mute
 footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
 
 /* mobile action bar */
-.action-bar{position:fixed;left:12px;right:12px;bottom:calc(12px + env(safe-area-inset-bottom));z-index:98;display:none;grid-template-columns:1fr 1fr;gap:8px;padding:8px;border-radius:999px;background:rgba(18,13,10,.88);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border:1px solid var(--line);transform:translateY(140%);transition:transform .6s var(--ease)}
+.action-bar{position:fixed;left:12px;right:12px;bottom:calc(12px + env(safe-area-inset-bottom));z-index:98;display:none;grid-template-columns:1fr 1fr;gap:8px;padding:8px;border-radius:999px;background:rgba(5,44,25,.92);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border:1px solid var(--line);transform:translateY(140%);transition:transform .6s var(--ease)}
 .action-bar.show{transform:none}
 .action-bar a{display:flex;align-items:center;justify-content:center;gap:8px;padding:13px;border-radius:999px;font-size:.74rem;letter-spacing:.16em;text-transform:uppercase}
 .action-bar a:first-child{background:var(--gold);color:var(--bg);font-weight:600}
@@ -324,7 +326,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
   <div class="loader-inner">
     <svg class="loader-flame" viewBox="0 0 34 52"><path d="M17 0C25 11 34 20 34 33a17 17 0 0 1-34 0C0 20 9 11 17 0z"/></svg>
     <div class="loader-word">
-      <span style="animation-delay:.05s;color:var(--gold)">H</span><span style="animation-delay:.12s;color:var(--pink)">O</span><span style="animation-delay:.19s;color:var(--teal)">L</span><span style="animation-delay:.26s;color:var(--ember)">Y</span>
+      <span style="animation-delay:.05s;color:var(--gold)">H</span><span style="animation-delay:.12s;color:var(--lime)">O</span><span style="animation-delay:.19s;color:var(--teal)">L</span><span style="animation-delay:.26s;color:var(--turq)">Y</span>
     </div>
     <div class="loader-bar"><i></i></div>
   </div>
@@ -334,7 +336,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
 <header class="nav">
   <div class="wrap">
     <a href="#top" class="brand" aria-label="Holy Restaurant home">
-      <svg viewBox="0 0 22 32" aria-hidden="true"><path d="M11 0c5 7 11 12 11 20a11 11 0 0 1-22 0C0 12 6 7 11 0z" fill="#ffc93c"/><path d="M11 13c2.5 3.5 5 6 5 9.5a5 5 0 0 1-10 0c0-3.5 2.5-6 5-9.5z" fill="#071338"/></svg>
+      <svg viewBox="0 0 22 32" aria-hidden="true"><path d="M11 0c5 7 11 12 11 20a11 11 0 0 1-22 0C0 12 6 7 11 0z" fill="#ffc93c"/><path d="M11 13c2.5 3.5 5 6 5 9.5a5 5 0 0 1-10 0c0-3.5 2.5-6 5-9.5z" fill="#05301b"/></svg>
       <span>HOLY<small>RESTAURANT</small></span>
       <span class="flag" role="img" aria-label="Haitian flag" title="Ayiti"><i></i></span>
     </a>
@@ -554,7 +556,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
 const RICE = "With rice and beans, white rice with bean sauce, or black rice.";
 const sl = (sm, lg) => `Sm $${sm} · Lg $${lg}`;
 const MENU = [
-  { cat: "Haitian Plates", color: "#d21034", dishes: [
+  { cat: "Haitian Plates", color: "#ffd640", dishes: [
     { name: "Bouillon / Stew", desc: "Goat, beef, plantain, spinach, carrots, watercress and yellow yam.", price: sl("17.99", "27.99") },
     { name: "Squash Soup / Joumou", desc: "Haiti's beloved pumpkin soup.", price: "$18.99" },
     { name: "Okra / Calalou", desc: RICE, price: sl("18.99", "27.99"), img: "img/okra-calalou.jpg" },
@@ -565,14 +567,14 @@ const MENU = [
     { name: "Goat / Kabrit", desc: RICE, price: sl("21.99", "27.99") },
     { name: "Fried Fish / Salt Fish", desc: RICE, price: sl("39.99", "49.99"), img: "img/fried-fish-salt-fish.jpg" },
   ]},
-  { cat: "Fritay", color: "#ef4f86", dishes: [
+  { cat: "Fritay", color: "#ff9f1c", dishes: [
     { name: "Pork", desc: "Fried Haitian-style, fritay plate.", price: "$20.99", img: "img/fritay.jpg" },
     { name: "Goat", desc: "Fried Haitian-style, fritay plate.", price: "$24.99" },
     { name: "Turkey", desc: "Fried Haitian-style, fritay plate.", price: "$24.99" },
     { name: "Chicken", desc: "Fried Haitian-style, fritay plate.", price: "$18.99" },
     { name: "Fish", desc: "Fried Haitian-style, fritay plate.", price: "$40.00" },
   ]},
-  { cat: "Lunch", color: "#1d3fd1", dishes: [
+  { cat: "Lunch", color: "#2fd0d9", dishes: [
     { name: "Baked Salmon", desc: "Mashed potatoes and green beans.", price: "$21.99", img: "img/baked-salmon.jpg" },
     { name: "Seasoned NY Steak", desc: "Mashed potatoes and mixed vegetables.", price: "$24.99", img: "img/seasoned-ny-steak.jpg" },
     { name: "Pork Ribs", desc: "Rice with sweet plantain.", price: "$18.99", img: "img/pork-ribs.jpg" },
@@ -588,13 +590,13 @@ const MENU = [
     { name: "Caesar Salad with Salmon", desc: "", price: "$22.99", img: "img/caesar-salad.jpg" },
     { name: "Mozzarella Sticks", desc: "4 pieces.", price: "$4.99" },
   ]},
-  { cat: "Appetizers", color: "#ffc93c", dishes: [
+  { cat: "Appetizers", color: "#7ee04f", dishes: [
     { name: "Chicktay with Bread", desc: "", price: "$4.99" },
     { name: "Chicktay Hareng or Janbon", desc: "Herring or ham.", price: "$4.99" },
     { name: "Patty", desc: "", price: "$10.99", img: "img/patty.jpg" },
     { name: "Garlic Bread", desc: "", price: "$2.99", img: "img/garlic-bread.jpg" },
   ]},
-  { cat: "Sides", color: "#19b8a6", dishes: [
+  { cat: "Sides", color: "#ffffff", dishes: [
     { name: "Plantains (5)", desc: "", price: "$5.99" },
     { name: "Akra (3 pieces)", desc: "", price: "$5.99" },
     { name: "Marinade (4 pieces)", desc: "", price: "$2.99" },
@@ -673,7 +675,7 @@ const HOURS = { 0:[8,20], 1:[8,21], 2:[8,21], 3:[8,20], 4:[8,22], 5:[8,22], 6:[8
     vy: -(Math.random() * .7 + .25),
     vx: (Math.random() - .5) * .3,
     life: 0, max: Math.random() * 500 + 300,
-    hue: [45, 48, 352, 174, 336, 225, 105][Math.floor(Math.random() * 7)],
+    hue: [45, 50, 58, 95, 110, 178, 186][Math.floor(Math.random() * 7)],
     wob: Math.random() * Math.PI * 2,
   });
   resize(); addEventListener("resize", resize);
